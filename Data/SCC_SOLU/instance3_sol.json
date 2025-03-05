@@ -1,0 +1,1352 @@
+
+{
+    "block": [
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 2340,
+            "machine": 0,
+            "start": 300,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 5280,
+            "machine": 6,
+            "start": 2700,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 8980,
+            "machine": 9,
+            "start": 6220,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 3200,
+            "machine": 3,
+            "start": 200,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 7780,
+            "machine": 7,
+            "start": 4780,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 11440,
+            "machine": 9,
+            "start": 8980,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 2360,
+            "machine": 1,
+            "start": 500,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 10120,
+            "machine": 7,
+            "start": 7960,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 14320,
+            "machine": 9,
+            "start": 11440,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 5540,
+            "machine": 4,
+            "start": 2840,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 7640,
+            "machine": 5,
+            "start": 6440,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 17830,
+            "machine": 9,
+            "start": 14320,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 4960,
+            "machine": 1,
+            "start": 2620,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 12020,
+            "machine": 5,
+            "start": 9440,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 20440,
+            "machine": 9,
+            "start": 17830,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 7760,
+            "machine": 4,
+            "start": 5720,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 19400,
+            "machine": 5,
+            "start": 17780,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 23500,
+            "machine": 9,
+            "start": 20440,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 7,
+            "end": 10820,
+            "machine": 3,
+            "start": 9320,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 7,
+            "end": 14740,
+            "machine": 7,
+            "start": 13180,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 7,
+            "end": 27190,
+            "machine": 9,
+            "start": 23680,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 8860,
+            "machine": 1,
+            "start": 7180,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 12540,
+            "machine": 6,
+            "start": 10140,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 29800,
+            "machine": 9,
+            "start": 27190,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 11300,
+            "machine": 4,
+            "start": 9680,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 18800,
+            "machine": 8,
+            "start": 16820,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 32650,
+            "machine": 9,
+            "start": 29800,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 10380,
+            "machine": 0,
+            "start": 8760,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 20720,
+            "machine": 8,
+            "start": 18980,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 36070,
+            "machine": 9,
+            "start": 32650,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 11260,
+            "machine": 1,
+            "start": 9040,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 21540,
+            "machine": 6,
+            "start": 18540,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 38440,
+            "machine": 9,
+            "start": 36070,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 12480,
+            "machine": 0,
+            "start": 10560,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 28160,
+            "machine": 8,
+            "start": 25760,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 41680,
+            "machine": 9,
+            "start": 38440,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 13,
+            "end": 16020,
+            "machine": 1,
+            "start": 13500,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 13,
+            "end": 25700,
+            "machine": 5,
+            "start": 23000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 13,
+            "end": 44920,
+            "machine": 9,
+            "start": 41860,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 14,
+            "end": 19940,
+            "machine": 4,
+            "start": 18380,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 14,
+            "end": 31440,
+            "machine": 7,
+            "start": 30060,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 14,
+            "end": 48250,
+            "machine": 9,
+            "start": 44920,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 21680,
+            "machine": 4,
+            "start": 20120,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 28160,
+            "machine": 5,
+            "start": 25880,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 51100,
+            "machine": 9,
+            "start": 48250,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 23480,
+            "machine": 4,
+            "start": 21860,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 30600,
+            "machine": 6,
+            "start": 29340,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 53980,
+            "machine": 9,
+            "start": 51100,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 21300,
+            "machine": 3,
+            "start": 19380,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 32460,
+            "machine": 6,
+            "start": 30780,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 56830,
+            "machine": 9,
+            "start": 53980,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 23580,
+            "machine": 1,
+            "start": 21240,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 37620,
+            "machine": 6,
+            "start": 35040,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 60460,
+            "machine": 9,
+            "start": 56830,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 19,
+            "end": 2500,
+            "machine": 4,
+            "start": 100,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 19,
+            "end": 4600,
+            "machine": 7,
+            "start": 3040,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 19,
+            "end": 8360,
+            "machine": 10,
+            "start": 5720,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 20,
+            "end": 3960,
+            "machine": 0,
+            "start": 2520,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 20,
+            "end": 6240,
+            "machine": 5,
+            "start": 4320,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 20,
+            "end": 11810,
+            "machine": 10,
+            "start": 8360,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 21,
+            "end": 7180,
+            "machine": 2,
+            "start": 5380,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 21,
+            "end": 9260,
+            "machine": 5,
+            "start": 8060,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 21,
+            "end": 14570,
+            "machine": 10,
+            "start": 11810,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 5660,
+            "machine": 3,
+            "start": 3380,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 8280,
+            "machine": 8,
+            "start": 6540,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 18140,
+            "machine": 10,
+            "start": 14570,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 12280,
+            "machine": 2,
+            "start": 9820,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 17600,
+            "machine": 5,
+            "start": 14960,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 21020,
+            "machine": 10,
+            "start": 18140,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 7340,
+            "machine": 3,
+            "start": 5840,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 11460,
+            "machine": 8,
+            "start": 8460,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 23780,
+            "machine": 10,
+            "start": 21020,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 25,
+            "end": 8580,
+            "machine": 0,
+            "start": 6000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 25,
+            "end": 21140,
+            "machine": 5,
+            "start": 19580,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 25,
+            "end": 26780,
+            "machine": 10,
+            "start": 23960,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 26,
+            "end": 9500,
+            "machine": 4,
+            "start": 7940,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 26,
+            "end": 20580,
+            "machine": 7,
+            "start": 17880,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 26,
+            "end": 29990,
+            "machine": 10,
+            "start": 26780,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 27,
+            "end": 12920,
+            "machine": 4,
+            "start": 11480,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 27,
+            "end": 16640,
+            "machine": 8,
+            "start": 14060,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 27,
+            "end": 33770,
+            "machine": 10,
+            "start": 29990,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 28,
+            "end": 15380,
+            "machine": 4,
+            "start": 13100,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 28,
+            "end": 22640,
+            "machine": 8,
+            "start": 20900,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 28,
+            "end": 36680,
+            "machine": 10,
+            "start": 33770,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 15720,
+            "machine": 3,
+            "start": 13200,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 25580,
+            "machine": 8,
+            "start": 22820,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 39680,
+            "machine": 10,
+            "start": 36680,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 17700,
+            "machine": 0,
+            "start": 15300,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 22820,
+            "machine": 5,
+            "start": 21320,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 42170,
+            "machine": 10,
+            "start": 39680,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 31,
+            "end": 18200,
+            "machine": 4,
+            "start": 15560,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 31,
+            "end": 29880,
+            "machine": 7,
+            "start": 28080,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 31,
+            "end": 45440,
+            "machine": 10,
+            "start": 42590,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 32,
+            "end": 20080,
+            "machine": 2,
+            "start": 18580,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 32,
+            "end": 23220,
+            "machine": 6,
+            "start": 21720,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 32,
+            "end": 48350,
+            "machine": 10,
+            "start": 45440,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 33,
+            "end": 17400,
+            "machine": 3,
+            "start": 15900,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 33,
+            "end": 25680,
+            "machine": 6,
+            "start": 23400,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 33,
+            "end": 50840,
+            "machine": 10,
+            "start": 48350,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 34,
+            "end": 19080,
+            "machine": 1,
+            "start": 16200,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 34,
+            "end": 30620,
+            "machine": 5,
+            "start": 28340,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 34,
+            "end": 54170,
+            "machine": 10,
+            "start": 50840,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 35,
+            "end": 22800,
+            "machine": 0,
+            "start": 21000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 35,
+            "end": 32440,
+            "machine": 5,
+            "start": 30880,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 35,
+            "end": 56660,
+            "machine": 10,
+            "start": 54170,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 23040,
+            "machine": 3,
+            "start": 21480,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 34860,
+            "machine": 6,
+            "start": 32640,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 59780,
+            "machine": 10,
+            "start": 56660,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 37,
+            "end": 2560,
+            "machine": 2,
+            "start": 400,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 37,
+            "end": 7740,
+            "machine": 6,
+            "start": 5460,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 37,
+            "end": 13420,
+            "machine": 11,
+            "start": 9910,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 38,
+            "end": 5200,
+            "machine": 2,
+            "start": 2740,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 38,
+            "end": 13000,
+            "machine": 7,
+            "start": 10300,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 38,
+            "end": 15850,
+            "machine": 11,
+            "start": 13420,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 39,
+            "end": 9640,
+            "machine": 2,
+            "start": 7360,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 39,
+            "end": 14780,
+            "machine": 5,
+            "start": 12200,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 39,
+            "end": 19000,
+            "machine": 11,
+            "start": 15850,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 40,
+            "end": 5820,
+            "machine": 0,
+            "start": 4140,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 40,
+            "end": 9960,
+            "machine": 6,
+            "start": 8160,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 40,
+            "end": 22390,
+            "machine": 11,
+            "start": 19000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 41,
+            "end": 14980,
+            "machine": 2,
+            "start": 12460,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 41,
+            "end": 17560,
+            "machine": 7,
+            "start": 16060,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 41,
+            "end": 25420,
+            "machine": 11,
+            "start": 22390,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 42,
+            "end": 9140,
+            "machine": 3,
+            "start": 7520,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 42,
+            "end": 13800,
+            "machine": 8,
+            "start": 11640,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 42,
+            "end": 28480,
+            "machine": 11,
+            "start": 25420,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 43,
+            "end": 7000,
+            "machine": 1,
+            "start": 5140,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 43,
+            "end": 15660,
+            "machine": 6,
+            "start": 12720,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 43,
+            "end": 31360,
+            "machine": 11,
+            "start": 28660,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 44,
+            "end": 12920,
+            "machine": 3,
+            "start": 11000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 44,
+            "end": 18360,
+            "machine": 6,
+            "start": 15840,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 44,
+            "end": 34360,
+            "machine": 11,
+            "start": 31360,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 45,
+            "end": 13320,
+            "machine": 1,
+            "start": 11580,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 45,
+            "end": 22500,
+            "machine": 7,
+            "start": 20760,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 45,
+            "end": 37720,
+            "machine": 11,
+            "start": 34360,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 46,
+            "end": 15120,
+            "machine": 0,
+            "start": 12660,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 46,
+            "end": 23940,
+            "machine": 7,
+            "start": 22680,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 46,
+            "end": 40750,
+            "machine": 11,
+            "start": 37720,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 47,
+            "end": 16600,
+            "machine": 2,
+            "start": 15160,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 47,
+            "end": 25320,
+            "machine": 7,
+            "start": 24120,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 47,
+            "end": 43780,
+            "machine": 11,
+            "start": 40750,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 48,
+            "end": 18400,
+            "machine": 2,
+            "start": 16780,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 48,
+            "end": 27900,
+            "machine": 7,
+            "start": 25500,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 48,
+            "end": 47410,
+            "machine": 11,
+            "start": 43780,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 49,
+            "end": 19200,
+            "machine": 3,
+            "start": 17580,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 49,
+            "end": 27300,
+            "machine": 6,
+            "start": 25980,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 49,
+            "end": 50650,
+            "machine": 11,
+            "start": 47590,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 50,
+            "end": 20820,
+            "machine": 0,
+            "start": 17880,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 50,
+            "end": 29160,
+            "machine": 6,
+            "start": 27480,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 50,
+            "end": 53080,
+            "machine": 11,
+            "start": 50650,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 51,
+            "end": 21060,
+            "machine": 1,
+            "start": 19260,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 51,
+            "end": 30540,
+            "machine": 8,
+            "start": 28440,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 51,
+            "end": 55990,
+            "machine": 11,
+            "start": 53080,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 52,
+            "end": 23080,
+            "machine": 2,
+            "start": 20260,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 52,
+            "end": 33260,
+            "machine": 8,
+            "start": 30980,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 52,
+            "end": 58540,
+            "machine": 11,
+            "start": 55990,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 53,
+            "end": 25080,
+            "machine": 0,
+            "start": 22980,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 53,
+            "end": 34200,
+            "machine": 7,
+            "start": 31620,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 53,
+            "end": 62020,
+            "machine": 11,
+            "start": 58540,
+            "type": "main"
+        }
+    ],
+    "machine": [
+        {
+            "name": "BOF#1",
+            "order": 0,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#2",
+            "order": 1,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#3",
+            "order": 2,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#4",
+            "order": 3,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#5",
+            "order": 4,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#1",
+            "order": 5,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#2",
+            "order": 6,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#3",
+            "order": 7,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#4",
+            "order": 8,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "CC#1",
+            "order": 9,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "CC#2",
+            "order": 10,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "CC#3",
+            "order": 11,
+            "stage": 2,
+            "type": "main"
+        }
+    ],
+    "start_time": 1455580920000
+}

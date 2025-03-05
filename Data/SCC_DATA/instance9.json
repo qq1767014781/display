@@ -1,0 +1,2043 @@
+{
+    "Cast_plan": [
+        {
+            "chargeid": "1",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "2",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "3",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "4",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "5",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "6",
+            "castid": "1",
+            "cc": 11,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "7",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "8",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "9",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "0-1-3"
+        },
+        {
+            "chargeid": "10",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "11",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "12",
+            "castid": "2",
+            "cc": 11,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "13",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "14",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "15",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "16",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "17",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "18",
+            "castid": "3",
+            "cc": 11,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "19",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "20",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "21",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "22",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "23",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "24",
+            "castid": "4",
+            "cc": 12,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "25",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "26",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "27",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "28",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "29",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "30",
+            "castid": "5",
+            "cc": 12,
+            "chargeroute": "0-1-3"
+        },
+        {
+            "chargeid": "31",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "32",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "33",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "34",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "35",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "36",
+            "castid": "6",
+            "cc": 12,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "37",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-1-3"
+        },
+        {
+            "chargeid": "38",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "39",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "40",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "41",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-2-3"
+        },
+        {
+            "chargeid": "42",
+            "castid": "7",
+            "cc": 13,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "43",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "44",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "45",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "46",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "47",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "48",
+            "castid": "8",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "49",
+            "castid": "9",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "50",
+            "castid": "9",
+            "cc": 13,
+            "chargeroute": "0-1-3"
+        },
+        {
+            "chargeid": "51",
+            "castid": "9",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        },
+        {
+            "chargeid": "52",
+            "castid": "9",
+            "cc": 13,
+            "chargeroute": "0-1-2-3"
+        },
+        {
+            "chargeid": "53",
+            "castid": "9",
+            "cc": 13,
+            "chargeroute": "1-2-3"
+        }
+    ],
+    "CC_Processing_Time": [
+        {
+            "ccid": 11,
+            "chargeid": "1",
+            "mintime": "55",
+            "standard_time": "57",
+            "maxtime": "67"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "10",
+            "mintime": "39",
+            "standard_time": "42",
+            "maxtime": "50"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "11",
+            "mintime": "42",
+            "standard_time": "46",
+            "maxtime": "53"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "12",
+            "mintime": "44",
+            "standard_time": "50",
+            "maxtime": "51"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "13",
+            "mintime": "46",
+            "standard_time": "50",
+            "maxtime": "52"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "14",
+            "mintime": "37",
+            "standard_time": "44",
+            "maxtime": "51"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "15",
+            "mintime": "59",
+            "standard_time": "60",
+            "maxtime": "67"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "16",
+            "mintime": "51",
+            "standard_time": "57",
+            "maxtime": "59"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "17",
+            "mintime": "51",
+            "standard_time": "59",
+            "maxtime": "65"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "18",
+            "mintime": "36",
+            "standard_time": "40",
+            "maxtime": "46"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "2",
+            "mintime": "36",
+            "standard_time": "46",
+            "maxtime": "55"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "3",
+            "mintime": "51",
+            "standard_time": "56",
+            "maxtime": "64"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "4",
+            "mintime": "37",
+            "standard_time": "44",
+            "maxtime": "46"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "5",
+            "mintime": "37",
+            "standard_time": "40",
+            "maxtime": "44"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "6",
+            "mintime": "45",
+            "standard_time": "46",
+            "maxtime": "50"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "7",
+            "mintime": "36",
+            "standard_time": "44",
+            "maxtime": "54"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "8",
+            "mintime": "32",
+            "standard_time": "40",
+            "maxtime": "41"
+        },
+        {
+            "ccid": 11,
+            "chargeid": "9",
+            "mintime": "53",
+            "standard_time": "59",
+            "maxtime": "69"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "19",
+            "mintime": "35",
+            "standard_time": "40",
+            "maxtime": "49"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "20",
+            "mintime": "38",
+            "standard_time": "43",
+            "maxtime": "46"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "21",
+            "mintime": "46",
+            "standard_time": "51",
+            "maxtime": "59"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "22",
+            "mintime": "42",
+            "standard_time": "51",
+            "maxtime": "54"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "23",
+            "mintime": "47",
+            "standard_time": "49",
+            "maxtime": "52"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "24",
+            "mintime": "49",
+            "standard_time": "52",
+            "maxtime": "54"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "25",
+            "mintime": "48",
+            "standard_time": "58",
+            "maxtime": "59"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "26",
+            "mintime": "46",
+            "standard_time": "48",
+            "maxtime": "52"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "27",
+            "mintime": "43",
+            "standard_time": "52",
+            "maxtime": "54"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "28",
+            "mintime": "34",
+            "standard_time": "44",
+            "maxtime": "52"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "29",
+            "mintime": "37",
+            "standard_time": "45",
+            "maxtime": "49"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "30",
+            "mintime": "47",
+            "standard_time": "54",
+            "maxtime": "58"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "31",
+            "mintime": "46",
+            "standard_time": "55",
+            "maxtime": "65"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "32",
+            "mintime": "35",
+            "standard_time": "40",
+            "maxtime": "47"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "33",
+            "mintime": "41",
+            "standard_time": "46",
+            "maxtime": "48"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "34",
+            "mintime": "36",
+            "standard_time": "40",
+            "maxtime": "44"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "35",
+            "mintime": "52",
+            "standard_time": "55",
+            "maxtime": "63"
+        },
+        {
+            "ccid": 12,
+            "chargeid": "36",
+            "mintime": "45",
+            "standard_time": "52",
+            "maxtime": "58"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "37",
+            "mintime": "52",
+            "standard_time": "54",
+            "maxtime": "63"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "38",
+            "mintime": "37",
+            "standard_time": "40",
+            "maxtime": "43"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "39",
+            "mintime": "53",
+            "standard_time": "57",
+            "maxtime": "65"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "40",
+            "mintime": "58",
+            "standard_time": "59",
+            "maxtime": "65"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "41",
+            "mintime": "41",
+            "standard_time": "49",
+            "maxtime": "51"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "42",
+            "mintime": "58",
+            "standard_time": "59",
+            "maxtime": "63"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "43",
+            "mintime": "54",
+            "standard_time": "56",
+            "maxtime": "57"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "44",
+            "mintime": "51",
+            "standard_time": "52",
+            "maxtime": "56"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "45",
+            "mintime": "43",
+            "standard_time": "52",
+            "maxtime": "57"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "46",
+            "mintime": "35",
+            "standard_time": "43",
+            "maxtime": "45"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "47",
+            "mintime": "51",
+            "standard_time": "55",
+            "maxtime": "59"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "48",
+            "mintime": "34",
+            "standard_time": "42",
+            "maxtime": "52"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "49",
+            "mintime": "31",
+            "standard_time": "41",
+            "maxtime": "50"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "50",
+            "mintime": "36",
+            "standard_time": "43",
+            "maxtime": "44"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "51",
+            "mintime": "38",
+            "standard_time": "44",
+            "maxtime": "49"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "52",
+            "mintime": "48",
+            "standard_time": "55",
+            "maxtime": "58"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "53",
+            "mintime": "43",
+            "standard_time": "46",
+            "maxtime": "49"
+        },
+        {
+            "ccid": 13,
+            "chargeid": "54",
+            "mintime": "38",
+            "standard_time": "48",
+            "maxtime": "49"
+        }
+    ],
+    "Earliest_available_time": [
+        {
+            "machineid": 0,
+            "eat": "2016-02-16T08:14:00"
+        },
+        {
+            "machineid": 1,
+            "eat": "2016-02-16T08:06:00"
+        },
+        {
+            "machineid": 2,
+            "eat": "2016-02-16T08:12:00"
+        },
+        {
+            "machineid": 3,
+            "eat": "2016-02-16T08:15:00"
+        },
+        {
+            "machineid": 4,
+            "eat": "2016-02-16T08:19:00"
+        },
+        {
+            "machineid": 5,
+            "eat": "2016-02-16T08:09:00"
+        },
+        {
+            "machineid": 6,
+            "eat": "2016-02-16T08:02:00"
+        },
+        {
+            "machineid": 7,
+            "eat": "2016-02-16T08:16:00"
+        },
+        {
+            "machineid": 8,
+            "eat": "2016-02-16T08:10:00"
+        },
+        {
+            "machineid": 9,
+            "eat": "2016-02-16T08:06:00"
+        },
+        {
+            "machineid": 10,
+            "eat": "2016-02-16T08:10:00"
+        },
+        {
+            "machineid": 11,
+            "eat": "2016-02-16T08:18:00"
+        },
+        {
+            "machineid": 12,
+            "eat": "2016-02-16T08:00:00"
+        },
+        {
+            "machineid": 13,
+            "eat": "2016-02-16T08:07:00"
+        }
+    ],
+    "Machine": [
+        {
+            "machineid": 0,
+            "stageid": 0
+        },
+        {
+            "machineid": 1,
+            "stageid": 0
+        },
+        {
+            "machineid": 2,
+            "stageid": 0
+        },
+        {
+            "machineid": 3,
+            "stageid": 1
+        },
+        {
+            "machineid": 4,
+            "stageid": 1
+        },
+        {
+            "machineid": 5,
+            "stageid": 1
+        },
+        {
+            "machineid": 6,
+            "stageid": 1
+        },
+        {
+            "machineid": 7,
+            "stageid": 1
+        },
+        {
+            "machineid": 8,
+            "stageid": 2
+        },
+        {
+            "machineid": 9,
+            "stageid": 2
+        },
+        {
+            "machineid": 10,
+            "stageid": 2
+        },
+        {
+            "machineid": 11,
+            "stageid": 3
+        },
+        {
+            "machineid": 12,
+            "stageid": 3
+        },
+        {
+            "machineid": 13,
+            "stageid": 3
+        }
+    ],
+    "nonCC_Processing_Time": [
+        {
+            "stageid": 0,
+            "chargeid": "1",
+            "mintime": "49",
+            "standard_time": "50",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "10",
+            "mintime": "20",
+            "standard_time": "24",
+            "maxtime": "32"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "11",
+            "mintime": "28",
+            "standard_time": "38",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "13",
+            "mintime": "37",
+            "standard_time": "42",
+            "maxtime": "51"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "14",
+            "mintime": "39",
+            "standard_time": "40",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "17",
+            "mintime": "20",
+            "standard_time": "22",
+            "maxtime": "29"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "18",
+            "mintime": "44",
+            "standard_time": "45",
+            "maxtime": "49"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "19",
+            "mintime": "29",
+            "standard_time": "33",
+            "maxtime": "38"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "2",
+            "mintime": "34",
+            "standard_time": "35",
+            "maxtime": "39"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "20",
+            "mintime": "24",
+            "standard_time": "31",
+            "maxtime": "37"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "21",
+            "mintime": "30",
+            "standard_time": "39",
+            "maxtime": "43"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "23",
+            "mintime": "17",
+            "standard_time": "27",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "24",
+            "mintime": "40",
+            "standard_time": "43",
+            "maxtime": "51"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "25",
+            "mintime": "19",
+            "standard_time": "25",
+            "maxtime": "33"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "27",
+            "mintime": "26",
+            "standard_time": "29",
+            "maxtime": "35"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "30",
+            "mintime": "49",
+            "standard_time": "50",
+            "maxtime": "52"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "32",
+            "mintime": "42",
+            "standard_time": "49",
+            "maxtime": "54"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "33",
+            "mintime": "39",
+            "standard_time": "49",
+            "maxtime": "52"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "35",
+            "mintime": "39",
+            "standard_time": "46",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "36",
+            "mintime": "36",
+            "standard_time": "42",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "37",
+            "mintime": "20",
+            "standard_time": "26",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "38",
+            "mintime": "38",
+            "standard_time": "39",
+            "maxtime": "48"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "39",
+            "mintime": "27",
+            "standard_time": "34",
+            "maxtime": "42"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "4",
+            "mintime": "35",
+            "standard_time": "38",
+            "maxtime": "41"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "40",
+            "mintime": "42",
+            "standard_time": "50",
+            "maxtime": "58"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "41",
+            "mintime": "33",
+            "standard_time": "41",
+            "maxtime": "43"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "42",
+            "mintime": "32",
+            "standard_time": "38",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "43",
+            "mintime": "37",
+            "standard_time": "44",
+            "maxtime": "52"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "44",
+            "mintime": "26",
+            "standard_time": "28",
+            "maxtime": "37"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "46",
+            "mintime": "41",
+            "standard_time": "50",
+            "maxtime": "60"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "5",
+            "mintime": "21",
+            "standard_time": "25",
+            "maxtime": "32"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "50",
+            "mintime": "26",
+            "standard_time": "28",
+            "maxtime": "30"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "52",
+            "mintime": "44",
+            "standard_time": "50",
+            "maxtime": "57"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "54",
+            "mintime": "42",
+            "standard_time": "50",
+            "maxtime": "56"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "7",
+            "mintime": "33",
+            "standard_time": "34",
+            "maxtime": "37"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "8",
+            "mintime": "24",
+            "standard_time": "26",
+            "maxtime": "27"
+        },
+        {
+            "stageid": 0,
+            "chargeid": "9",
+            "mintime": "17",
+            "standard_time": "21",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "12",
+            "mintime": "48",
+            "standard_time": "49",
+            "maxtime": "50"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "15",
+            "mintime": "21",
+            "standard_time": "29",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "16",
+            "mintime": "22",
+            "standard_time": "26",
+            "maxtime": "34"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "17",
+            "mintime": "35",
+            "standard_time": "44",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "18",
+            "mintime": "14",
+            "standard_time": "24",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "2",
+            "mintime": "20",
+            "standard_time": "28",
+            "maxtime": "38"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "20",
+            "mintime": "43",
+            "standard_time": "44",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "22",
+            "mintime": "20",
+            "standard_time": "29",
+            "maxtime": "30"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "24",
+            "mintime": "47",
+            "standard_time": "50",
+            "maxtime": "56"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "25",
+            "mintime": "35",
+            "standard_time": "40",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "26",
+            "mintime": "42",
+            "standard_time": "44",
+            "maxtime": "49"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "27",
+            "mintime": "28",
+            "standard_time": "34",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "28",
+            "mintime": "35",
+            "standard_time": "41",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "29",
+            "mintime": "24",
+            "standard_time": "26",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "3",
+            "mintime": "32",
+            "standard_time": "42",
+            "maxtime": "47"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "30",
+            "mintime": "23",
+            "standard_time": "24",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "31",
+            "mintime": "29",
+            "standard_time": "33",
+            "maxtime": "41"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "34",
+            "mintime": "25",
+            "standard_time": "32",
+            "maxtime": "38"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "36",
+            "mintime": "26",
+            "standard_time": "32",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "37",
+            "mintime": "35",
+            "standard_time": "39",
+            "maxtime": "47"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "4",
+            "mintime": "32",
+            "standard_time": "34",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "42",
+            "mintime": "38",
+            "standard_time": "39",
+            "maxtime": "43"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "43",
+            "mintime": "16",
+            "standard_time": "24",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "44",
+            "mintime": "34",
+            "standard_time": "44",
+            "maxtime": "49"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "45",
+            "mintime": "18",
+            "standard_time": "25",
+            "maxtime": "33"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "46",
+            "mintime": "31",
+            "standard_time": "33",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "47",
+            "mintime": "28",
+            "standard_time": "34",
+            "maxtime": "41"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "48",
+            "mintime": "35",
+            "standard_time": "37",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "49",
+            "mintime": "10",
+            "standard_time": "20",
+            "maxtime": "22"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "5",
+            "mintime": "43",
+            "standard_time": "44",
+            "maxtime": "54"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "50",
+            "mintime": "43",
+            "standard_time": "46",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "51",
+            "mintime": "30",
+            "standard_time": "32",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "52",
+            "mintime": "37",
+            "standard_time": "47",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "53",
+            "mintime": "24",
+            "standard_time": "28",
+            "maxtime": "33"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "6",
+            "mintime": "41",
+            "standard_time": "45",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "7",
+            "mintime": "37",
+            "standard_time": "39",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "8",
+            "mintime": "38",
+            "standard_time": "44",
+            "maxtime": "45"
+        },
+        {
+            "stageid": 1,
+            "chargeid": "9",
+            "mintime": "15",
+            "standard_time": "24",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "1",
+            "mintime": "26",
+            "standard_time": "35",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "10",
+            "mintime": "36",
+            "standard_time": "44",
+            "maxtime": "49"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "11",
+            "mintime": "42",
+            "standard_time": "46",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "12",
+            "mintime": "33",
+            "standard_time": "43",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "13",
+            "mintime": "25",
+            "standard_time": "34",
+            "maxtime": "39"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "14",
+            "mintime": "27",
+            "standard_time": "34",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "15",
+            "mintime": "33",
+            "standard_time": "38",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "16",
+            "mintime": "27",
+            "standard_time": "36",
+            "maxtime": "43"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "17",
+            "mintime": "30",
+            "standard_time": "38",
+            "maxtime": "46"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "18",
+            "mintime": "20",
+            "standard_time": "24",
+            "maxtime": "25"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "19",
+            "mintime": "13",
+            "standard_time": "21",
+            "maxtime": "28"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "2",
+            "mintime": "23",
+            "standard_time": "33",
+            "maxtime": "39"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "20",
+            "mintime": "41",
+            "standard_time": "43",
+            "maxtime": "50"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "21",
+            "mintime": "18",
+            "standard_time": "25",
+            "maxtime": "27"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "22",
+            "mintime": "20",
+            "standard_time": "28",
+            "maxtime": "32"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "23",
+            "mintime": "27",
+            "standard_time": "34",
+            "maxtime": "42"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "24",
+            "mintime": "18",
+            "standard_time": "22",
+            "maxtime": "28"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "25",
+            "mintime": "37",
+            "standard_time": "41",
+            "maxtime": "48"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "26",
+            "mintime": "32",
+            "standard_time": "35",
+            "maxtime": "37"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "27",
+            "mintime": "24",
+            "standard_time": "29",
+            "maxtime": "38"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "28",
+            "mintime": "35",
+            "standard_time": "42",
+            "maxtime": "43"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "29",
+            "mintime": "27",
+            "standard_time": "32",
+            "maxtime": "40"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "3",
+            "mintime": "26",
+            "standard_time": "32",
+            "maxtime": "42"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "31",
+            "mintime": "31",
+            "standard_time": "39",
+            "maxtime": "47"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "32",
+            "mintime": "37",
+            "standard_time": "43",
+            "maxtime": "53"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "33",
+            "mintime": "20",
+            "standard_time": "30",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "34",
+            "mintime": "24",
+            "standard_time": "25",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "35",
+            "mintime": "40",
+            "standard_time": "46",
+            "maxtime": "48"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "36",
+            "mintime": "25",
+            "standard_time": "33",
+            "maxtime": "38"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "38",
+            "mintime": "15",
+            "standard_time": "24",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "39",
+            "mintime": "10",
+            "standard_time": "20",
+            "maxtime": "24"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "4",
+            "mintime": "10",
+            "standard_time": "20",
+            "maxtime": "28"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "40",
+            "mintime": "37",
+            "standard_time": "46",
+            "maxtime": "55"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "41",
+            "mintime": "32",
+            "standard_time": "38",
+            "maxtime": "39"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "42",
+            "mintime": "17",
+            "standard_time": "25",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "43",
+            "mintime": "25",
+            "standard_time": "28",
+            "maxtime": "33"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "44",
+            "mintime": "42",
+            "standard_time": "45",
+            "maxtime": "52"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "45",
+            "mintime": "32",
+            "standard_time": "36",
+            "maxtime": "44"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "46",
+            "mintime": "39",
+            "standard_time": "49",
+            "maxtime": "58"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "47",
+            "mintime": "20",
+            "standard_time": "28",
+            "maxtime": "32"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "48",
+            "mintime": "23",
+            "standard_time": "27",
+            "maxtime": "31"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "49",
+            "mintime": "14",
+            "standard_time": "20",
+            "maxtime": "25"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "5",
+            "mintime": "19",
+            "standard_time": "22",
+            "maxtime": "23"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "51",
+            "mintime": "26",
+            "standard_time": "33",
+            "maxtime": "35"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "52",
+            "mintime": "23",
+            "standard_time": "26",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "53",
+            "mintime": "45",
+            "standard_time": "49",
+            "maxtime": "59"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "54",
+            "mintime": "31",
+            "standard_time": "41",
+            "maxtime": "45"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "6",
+            "mintime": "14",
+            "standard_time": "20",
+            "maxtime": "26"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "7",
+            "mintime": "25",
+            "standard_time": "34",
+            "maxtime": "36"
+        },
+        {
+            "stageid": 2,
+            "chargeid": "8",
+            "mintime": "38",
+            "standard_time": "39",
+            "maxtime": "43"
+        }
+    ],
+    "Stage": [
+        {
+            "stageid": 0,
+            "machineid": 0
+        },
+        {
+            "stageid": 0,
+            "machineid": 1
+        },
+        {
+            "stageid": 0,
+            "machineid": 2
+        },
+        {
+            "stageid": 1,
+            "machineid": 3
+        },
+        {
+            "stageid": 1,
+            "machineid": 4
+        },
+        {
+            "stageid": 1,
+            "machineid": 5
+        },
+        {
+            "stageid": 1,
+            "machineid": 6
+        },
+        {
+            "stageid": 1,
+            "machineid": 7
+        },
+        {
+            "stageid": 2,
+            "machineid": 8
+        },
+        {
+            "stageid": 2,
+            "machineid": 9
+        },
+        {
+            "stageid": 2,
+            "machineid": 10
+        },
+        {
+            "stageid": 3,
+            "machineid": 11
+        },
+        {
+            "stageid": 3,
+            "machineid": 12
+        },
+        {
+            "stageid": 3,
+            "machineid": 13
+        }
+    ],
+    "Transport_Time": [
+        {
+            "transport_line": "0-10",
+            "transport_time": "11"
+        },
+        {
+            "transport_line": "0-11",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "0-12",
+            "transport_time": "17"
+        },
+        {
+            "transport_line": "0-13",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "0-3",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "0-4",
+            "transport_time": "19"
+        },
+        {
+            "transport_line": "0-5",
+            "transport_time": "9"
+        },
+        {
+            "transport_line": "0-6",
+            "transport_time": "16"
+        },
+        {
+            "transport_line": "0-7",
+            "transport_time": "5"
+        },
+        {
+            "transport_line": "0-8",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "0-9",
+            "transport_time": "11"
+        },
+        {
+            "transport_line": "1-10",
+            "transport_time": "7"
+        },
+        {
+            "transport_line": "1-11",
+            "transport_time": "16"
+        },
+        {
+            "transport_line": "1-12",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "1-13",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "1-3",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "1-4",
+            "transport_time": "7"
+        },
+        {
+            "transport_line": "1-5",
+            "transport_time": "20"
+        },
+        {
+            "transport_line": "1-6",
+            "transport_time": "5"
+        },
+        {
+            "transport_line": "1-7",
+            "transport_time": "8"
+        },
+        {
+            "transport_line": "1-8",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "1-9",
+            "transport_time": "7"
+        },
+        {
+            "transport_line": "10-11",
+            "transport_time": "9"
+        },
+        {
+            "transport_line": "10-12",
+            "transport_time": "7"
+        },
+        {
+            "transport_line": "10-13",
+            "transport_time": "16"
+        },
+        {
+            "transport_line": "2-10",
+            "transport_time": "16"
+        },
+        {
+            "transport_line": "2-11",
+            "transport_time": "20"
+        },
+        {
+            "transport_line": "2-12",
+            "transport_time": "17"
+        },
+        {
+            "transport_line": "2-13",
+            "transport_time": "10"
+        },
+        {
+            "transport_line": "2-3",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "2-4",
+            "transport_time": "16"
+        },
+        {
+            "transport_line": "2-5",
+            "transport_time": "13"
+        },
+        {
+            "transport_line": "2-6",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "2-7",
+            "transport_time": "19"
+        },
+        {
+            "transport_line": "2-8",
+            "transport_time": "9"
+        },
+        {
+            "transport_line": "2-9",
+            "transport_time": "10"
+        },
+        {
+            "transport_line": "3-10",
+            "transport_time": "9"
+        },
+        {
+            "transport_line": "3-11",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "3-12",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "3-13",
+            "transport_time": "13"
+        },
+        {
+            "transport_line": "3-8",
+            "transport_time": "19"
+        },
+        {
+            "transport_line": "3-9",
+            "transport_time": "8"
+        },
+        {
+            "transport_line": "4-10",
+            "transport_time": "8"
+        },
+        {
+            "transport_line": "4-11",
+            "transport_time": "5"
+        },
+        {
+            "transport_line": "4-12",
+            "transport_time": "5"
+        },
+        {
+            "transport_line": "4-13",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "4-8",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "4-9",
+            "transport_time": "20"
+        },
+        {
+            "transport_line": "5-10",
+            "transport_time": "18"
+        },
+        {
+            "transport_line": "5-11",
+            "transport_time": "20"
+        },
+        {
+            "transport_line": "5-12",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "5-13",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "5-8",
+            "transport_time": "7"
+        },
+        {
+            "transport_line": "5-9",
+            "transport_time": "17"
+        },
+        {
+            "transport_line": "6-10",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "6-11",
+            "transport_time": "11"
+        },
+        {
+            "transport_line": "6-12",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "6-13",
+            "transport_time": "6"
+        },
+        {
+            "transport_line": "6-8",
+            "transport_time": "8"
+        },
+        {
+            "transport_line": "6-9",
+            "transport_time": "17"
+        },
+        {
+            "transport_line": "7-10",
+            "transport_time": "14"
+        },
+        {
+            "transport_line": "7-11",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "7-12",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "7-13",
+            "transport_time": "11"
+        },
+        {
+            "transport_line": "7-8",
+            "transport_time": "19"
+        },
+        {
+            "transport_line": "7-9",
+            "transport_time": "19"
+        },
+        {
+            "transport_line": "8-11",
+            "transport_time": "9"
+        },
+        {
+            "transport_line": "8-12",
+            "transport_time": "12"
+        },
+        {
+            "transport_line": "8-13",
+            "transport_time": "15"
+        },
+        {
+            "transport_line": "9-11",
+            "transport_time": "20"
+        },
+        {
+            "transport_line": "9-12",
+            "transport_time": "10"
+        },
+        {
+            "transport_line": "9-13",
+            "transport_time": "12"
+        }
+    ]
+}

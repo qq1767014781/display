@@ -1,0 +1,2264 @@
+
+{
+    "block": [
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 1320000,
+            "machine": 1,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 5760000,
+            "machine": 7,
+            "start": 4560000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 8760000,
+            "machine": 11,
+            "start": 6060000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 1,
+            "end": 12630000,
+            "machine": 13,
+            "start": 9300000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 1680000,
+            "machine": 3,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 4380000,
+            "machine": 7,
+            "start": 2760000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 2,
+            "end": 15480000,
+            "machine": 13,
+            "start": 12630000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 1920000,
+            "machine": 7,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 4320000,
+            "machine": 11,
+            "start": 2220000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 3,
+            "end": 18930000,
+            "machine": 13,
+            "start": 15480000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 5100000,
+            "machine": 4,
+            "start": 3180000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 11280000,
+            "machine": 8,
+            "start": 8580000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 14580000,
+            "machine": 11,
+            "start": 12420000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 4,
+            "end": 22410000,
+            "machine": 13,
+            "start": 18930000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 7200000,
+            "machine": 3,
+            "start": 4440000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 10440000,
+            "machine": 9,
+            "start": 7920000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 5,
+            "end": 25050000,
+            "machine": 13,
+            "start": 22410000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 2580000,
+            "machine": 5,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 16800000,
+            "machine": 11,
+            "start": 14760000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 6,
+            "end": 28680000,
+            "machine": 13,
+            "start": 25050000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 7,
+            "end": 9060000,
+            "machine": 0,
+            "start": 6540000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 7,
+            "end": 18900000,
+            "machine": 10,
+            "start": 16500000,
+            "type": "main"
+        },
+        {
+            "cast": 1,
+            "charge": 7,
+            "end": 32220000,
+            "machine": 13,
+            "start": 28680000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 5160000,
+            "machine": 1,
+            "start": 3780000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 23400000,
+            "machine": 9,
+            "start": 21180000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 8,
+            "end": 35850000,
+            "machine": 13,
+            "start": 32400000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 5700000,
+            "machine": 8,
+            "start": 2880000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 12000000,
+            "machine": 12,
+            "start": 10260000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 9,
+            "end": 39240000,
+            "machine": 13,
+            "start": 35850000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 5640000,
+            "machine": 2,
+            "start": 3660000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 10980000,
+            "machine": 5,
+            "start": 9240000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 10,
+            "end": 41940000,
+            "machine": 13,
+            "start": 39240000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 6360000,
+            "machine": 0,
+            "start": 4440000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 9060000,
+            "machine": 5,
+            "start": 7680000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 12900000,
+            "machine": 10,
+            "start": 10200000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 11,
+            "end": 44610000,
+            "machine": 13,
+            "start": 41940000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 21600000,
+            "machine": 6,
+            "start": 20100000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 25260000,
+            "machine": 9,
+            "start": 23580000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 12,
+            "end": 48090000,
+            "machine": 13,
+            "start": 44610000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 13,
+            "end": 10260000,
+            "machine": 2,
+            "start": 8340000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 13,
+            "end": 23580000,
+            "machine": 6,
+            "start": 21780000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 13,
+            "end": 50490000,
+            "machine": 13,
+            "start": 48090000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 14,
+            "end": 6720000,
+            "machine": 4,
+            "start": 5280000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 14,
+            "end": 10080000,
+            "machine": 12,
+            "start": 8280000,
+            "type": "main"
+        },
+        {
+            "cast": 2,
+            "charge": 14,
+            "end": 53520000,
+            "machine": 13,
+            "start": 50490000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 12600000,
+            "machine": 2,
+            "start": 10440000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 16860000,
+            "machine": 5,
+            "start": 14580000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 31680000,
+            "machine": 9,
+            "start": 30000000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 15,
+            "end": 56940000,
+            "machine": 13,
+            "start": 53700000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 13800000,
+            "machine": 1,
+            "start": 11940000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 30000000,
+            "machine": 6,
+            "start": 28260000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 16,
+            "end": 59340000,
+            "machine": 13,
+            "start": 56940000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 31680000,
+            "machine": 6,
+            "start": 30180000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 35520000,
+            "machine": 9,
+            "start": 33840000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 17,
+            "end": 62910000,
+            "machine": 13,
+            "start": 59340000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 18780000,
+            "machine": 5,
+            "start": 17040000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 33660000,
+            "machine": 9,
+            "start": 31860000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 18,
+            "end": 65400000,
+            "machine": 13,
+            "start": 62910000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 19,
+            "end": 14220000,
+            "machine": 4,
+            "start": 12120000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 19,
+            "end": 36960000,
+            "machine": 9,
+            "start": 35700000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 19,
+            "end": 67830000,
+            "machine": 13,
+            "start": 65400000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 20,
+            "end": 21780000,
+            "machine": 2,
+            "start": 20340000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 20,
+            "end": 38220000,
+            "machine": 6,
+            "start": 36720000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 20,
+            "end": 70350000,
+            "machine": 13,
+            "start": 67830000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 21,
+            "end": 20160000,
+            "machine": 2,
+            "start": 17160000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 21,
+            "end": 25020000,
+            "machine": 5,
+            "start": 22260000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 21,
+            "end": 41160000,
+            "machine": 9,
+            "start": 39780000,
+            "type": "main"
+        },
+        {
+            "cast": 3,
+            "charge": 21,
+            "end": 73650000,
+            "machine": 13,
+            "start": 70350000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 26940000,
+            "machine": 2,
+            "start": 24240000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 43740000,
+            "machine": 6,
+            "start": 40860000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 47580000,
+            "machine": 9,
+            "start": 46320000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 22,
+            "end": 77220000,
+            "machine": 13,
+            "start": 73830000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 22080000,
+            "machine": 5,
+            "start": 20640000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 43680000,
+            "machine": 9,
+            "start": 41340000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 23,
+            "end": 80010000,
+            "machine": 13,
+            "start": 77220000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 19440000,
+            "machine": 4,
+            "start": 16980000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 30120000,
+            "machine": 5,
+            "start": 28380000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 46140000,
+            "machine": 9,
+            "start": 43860000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 24,
+            "end": 83640000,
+            "machine": 13,
+            "start": 80010000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 25,
+            "end": 29460000,
+            "machine": 2,
+            "start": 27120000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 25,
+            "end": 34500000,
+            "machine": 7,
+            "start": 31860000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 25,
+            "end": 52380000,
+            "machine": 9,
+            "start": 49740000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 25,
+            "end": 87210000,
+            "machine": 13,
+            "start": 83640000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 26,
+            "end": 18300000,
+            "machine": 1,
+            "start": 16500000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 26,
+            "end": 29040000,
+            "machine": 8,
+            "start": 26340000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 26,
+            "end": 54540000,
+            "machine": 9,
+            "start": 52560000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 26,
+            "end": 90030000,
+            "machine": 13,
+            "start": 87210000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 27,
+            "end": 37740000,
+            "machine": 5,
+            "start": 35340000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 27,
+            "end": 60300000,
+            "machine": 9,
+            "start": 57720000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 27,
+            "end": 92700000,
+            "machine": 13,
+            "start": 90030000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 28,
+            "end": 39420000,
+            "machine": 5,
+            "start": 37920000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 28,
+            "end": 66180000,
+            "machine": 9,
+            "start": 63300000,
+            "type": "main"
+        },
+        {
+            "cast": 4,
+            "charge": 28,
+            "end": 95880000,
+            "machine": 13,
+            "start": 92700000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 3000000,
+            "machine": 4,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 7920000,
+            "machine": 6,
+            "start": 5460000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 29,
+            "end": 11700000,
+            "machine": 14,
+            "start": 8520000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 2220000,
+            "machine": 6,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 5700000,
+            "machine": 11,
+            "start": 4500000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 30,
+            "end": 14730000,
+            "machine": 14,
+            "start": 11700000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 31,
+            "end": 2580000,
+            "machine": 0,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 31,
+            "end": 10440000,
+            "machine": 11,
+            "start": 8940000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 31,
+            "end": 17520000,
+            "machine": 14,
+            "start": 14730000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 32,
+            "end": 4260000,
+            "machine": 3,
+            "start": 1860000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 32,
+            "end": 12240000,
+            "machine": 11,
+            "start": 10620000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 32,
+            "end": 20160000,
+            "machine": 14,
+            "start": 17520000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 33,
+            "end": 1800000,
+            "machine": 2,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 33,
+            "end": 10500000,
+            "machine": 6,
+            "start": 8100000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 33,
+            "end": 23580000,
+            "machine": 14,
+            "start": 20160000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 34,
+            "end": 9600000,
+            "machine": 3,
+            "start": 7380000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 34,
+            "end": 15840000,
+            "machine": 6,
+            "start": 12900000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 34,
+            "end": 27180000,
+            "machine": 14,
+            "start": 23580000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 35,
+            "end": 3480000,
+            "machine": 2,
+            "start": 1980000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 35,
+            "end": 7500000,
+            "machine": 5,
+            "start": 4500000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 35,
+            "end": 19560000,
+            "machine": 11,
+            "start": 16980000,
+            "type": "main"
+        },
+        {
+            "cast": 5,
+            "charge": 35,
+            "end": 30330000,
+            "machine": 14,
+            "start": 27180000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 3600000,
+            "machine": 1,
+            "start": 1500000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 6420000,
+            "machine": 12,
+            "start": 4440000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 36,
+            "end": 33480000,
+            "machine": 14,
+            "start": 30510000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 37,
+            "end": 10800000,
+            "machine": 0,
+            "start": 9240000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 37,
+            "end": 13380000,
+            "machine": 7,
+            "start": 11880000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 37,
+            "end": 36390000,
+            "machine": 14,
+            "start": 33480000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 38,
+            "end": 8100000,
+            "machine": 1,
+            "start": 5340000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 38,
+            "end": 13500000,
+            "machine": 8,
+            "start": 11460000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 38,
+            "end": 39120000,
+            "machine": 14,
+            "start": 36390000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 39,
+            "end": 14760000,
+            "machine": 3,
+            "start": 13140000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 39,
+            "end": 19620000,
+            "machine": 8,
+            "start": 17760000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 39,
+            "end": 42210000,
+            "machine": 14,
+            "start": 39120000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 40,
+            "end": 12240000,
+            "machine": 0,
+            "start": 10980000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 40,
+            "end": 16440000,
+            "machine": 7,
+            "start": 13560000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 40,
+            "end": 45750000,
+            "machine": 14,
+            "start": 42210000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 41,
+            "end": 15180000,
+            "machine": 0,
+            "start": 12420000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 41,
+            "end": 18780000,
+            "machine": 12,
+            "start": 15780000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 41,
+            "end": 48750000,
+            "machine": 14,
+            "start": 45750000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 42,
+            "end": 16560000,
+            "machine": 3,
+            "start": 14940000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 42,
+            "end": 20400000,
+            "machine": 10,
+            "start": 19080000,
+            "type": "main"
+        },
+        {
+            "cast": 6,
+            "charge": 42,
+            "end": 51510000,
+            "machine": 14,
+            "start": 48750000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 43,
+            "end": 17580000,
+            "machine": 8,
+            "start": 15240000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 43,
+            "end": 21660000,
+            "machine": 12,
+            "start": 18960000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 43,
+            "end": 54150000,
+            "machine": 14,
+            "start": 51690000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 44,
+            "end": 11760000,
+            "machine": 1,
+            "start": 10380000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 44,
+            "end": 14400000,
+            "machine": 5,
+            "start": 13200000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 44,
+            "end": 22380000,
+            "machine": 10,
+            "start": 20580000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 44,
+            "end": 57630000,
+            "machine": 14,
+            "start": 54150000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 45,
+            "end": 16980000,
+            "machine": 2,
+            "start": 14580000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 45,
+            "end": 28080000,
+            "machine": 6,
+            "start": 26700000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 45,
+            "end": 30780000,
+            "machine": 11,
+            "start": 29460000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 45,
+            "end": 60240000,
+            "machine": 14,
+            "start": 57630000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 46,
+            "end": 34020000,
+            "machine": 6,
+            "start": 31860000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 46,
+            "end": 36420000,
+            "machine": 12,
+            "start": 34980000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 46,
+            "end": 63330000,
+            "machine": 14,
+            "start": 60240000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 47,
+            "end": 18720000,
+            "machine": 3,
+            "start": 16740000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 47,
+            "end": 24840000,
+            "machine": 10,
+            "start": 22560000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 47,
+            "end": 66360000,
+            "machine": 14,
+            "start": 63330000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 48,
+            "end": 36540000,
+            "machine": 6,
+            "start": 34200000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 48,
+            "end": 39600000,
+            "machine": 9,
+            "start": 37140000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 48,
+            "end": 69030000,
+            "machine": 14,
+            "start": 66360000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 49,
+            "end": 24060000,
+            "machine": 2,
+            "start": 21960000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 49,
+            "end": 40680000,
+            "machine": 6,
+            "start": 38400000,
+            "type": "main"
+        },
+        {
+            "cast": 7,
+            "charge": 49,
+            "end": 71340000,
+            "machine": 14,
+            "start": 69030000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 50,
+            "end": 21480000,
+            "machine": 3,
+            "start": 18900000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 50,
+            "end": 28200000,
+            "machine": 5,
+            "start": 25200000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 50,
+            "end": 31920000,
+            "machine": 12,
+            "start": 29820000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 50,
+            "end": 74970000,
+            "machine": 14,
+            "start": 71520000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 51,
+            "end": 20460000,
+            "machine": 5,
+            "start": 18960000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 51,
+            "end": 34080000,
+            "machine": 12,
+            "start": 32100000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 51,
+            "end": 78780000,
+            "machine": 14,
+            "start": 74970000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 52,
+            "end": 25980000,
+            "machine": 3,
+            "start": 24360000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 52,
+            "end": 46380000,
+            "machine": 6,
+            "start": 43920000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 52,
+            "end": 48540000,
+            "machine": 12,
+            "start": 47340000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 52,
+            "end": 81930000,
+            "machine": 14,
+            "start": 78780000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 53,
+            "end": 27720000,
+            "machine": 3,
+            "start": 26160000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 53,
+            "end": 31680000,
+            "machine": 7,
+            "start": 29160000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 53,
+            "end": 85260000,
+            "machine": 14,
+            "start": 81930000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 54,
+            "end": 33060000,
+            "machine": 5,
+            "start": 30300000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 54,
+            "end": 36540000,
+            "machine": 10,
+            "start": 34200000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 54,
+            "end": 88290000,
+            "machine": 14,
+            "start": 85260000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 55,
+            "end": 35160000,
+            "machine": 5,
+            "start": 33240000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 55,
+            "end": 38640000,
+            "machine": 11,
+            "start": 36360000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 55,
+            "end": 91260000,
+            "machine": 14,
+            "start": 88290000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 56,
+            "end": 51240000,
+            "machine": 6,
+            "start": 48540000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 56,
+            "end": 63120000,
+            "machine": 9,
+            "start": 60480000,
+            "type": "main"
+        },
+        {
+            "cast": 8,
+            "charge": 56,
+            "end": 94650000,
+            "machine": 14,
+            "start": 91260000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 57,
+            "end": 8160000,
+            "machine": 7,
+            "start": 5940000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 57,
+            "end": 13260000,
+            "machine": 9,
+            "start": 10620000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 57,
+            "end": 17280000,
+            "machine": 15,
+            "start": 13620000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 58,
+            "end": 5280000,
+            "machine": 6,
+            "start": 2400000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 58,
+            "end": 8100000,
+            "machine": 12,
+            "start": 6600000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 58,
+            "end": 19680000,
+            "machine": 15,
+            "start": 17280000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 59,
+            "end": 4260000,
+            "machine": 0,
+            "start": 2760000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 59,
+            "end": 9960000,
+            "machine": 7,
+            "start": 8340000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 59,
+            "end": 14280000,
+            "machine": 10,
+            "start": 13080000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 59,
+            "end": 22680000,
+            "machine": 15,
+            "start": 19680000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 60,
+            "end": 12720000,
+            "machine": 6,
+            "start": 10680000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 60,
+            "end": 16320000,
+            "machine": 10,
+            "start": 14460000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 60,
+            "end": 25920000,
+            "machine": 15,
+            "start": 22680000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 61,
+            "end": 10980000,
+            "machine": 3,
+            "start": 9780000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 61,
+            "end": 18540000,
+            "machine": 6,
+            "start": 16020000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 61,
+            "end": 21000000,
+            "machine": 9,
+            "start": 18960000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 61,
+            "end": 28320000,
+            "machine": 15,
+            "start": 25920000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 62,
+            "end": 11700000,
+            "machine": 7,
+            "start": 10140000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 62,
+            "end": 16320000,
+            "machine": 9,
+            "start": 13440000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 62,
+            "end": 31530000,
+            "machine": 15,
+            "start": 28320000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 63,
+            "end": 12960000,
+            "machine": 3,
+            "start": 11160000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 63,
+            "end": 18780000,
+            "machine": 9,
+            "start": 16500000,
+            "type": "main"
+        },
+        {
+            "cast": 9,
+            "charge": 63,
+            "end": 33870000,
+            "machine": 15,
+            "start": 31530000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 64,
+            "end": 2700000,
+            "machine": 8,
+            "start": 0,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 64,
+            "end": 5880000,
+            "machine": 10,
+            "start": 3540000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 64,
+            "end": 37230000,
+            "machine": 15,
+            "start": 34050000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 65,
+            "end": 4320000,
+            "machine": 5,
+            "start": 2760000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 65,
+            "end": 6900000,
+            "machine": 9,
+            "start": 5400000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 65,
+            "end": 39840000,
+            "machine": 15,
+            "start": 37230000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 66,
+            "end": 10200000,
+            "machine": 1,
+            "start": 8280000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 66,
+            "end": 15060000,
+            "machine": 8,
+            "start": 13680000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 66,
+            "end": 42300000,
+            "machine": 15,
+            "start": 39840000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 67,
+            "end": 8160000,
+            "machine": 2,
+            "start": 5820000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 67,
+            "end": 19920000,
+            "machine": 6,
+            "start": 18720000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 67,
+            "end": 24720000,
+            "machine": 12,
+            "start": 21840000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 67,
+            "end": 45030000,
+            "machine": 15,
+            "start": 42300000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 68,
+            "end": 9480000,
+            "machine": 4,
+            "start": 6900000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 68,
+            "end": 13020000,
+            "machine": 5,
+            "start": 11160000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 68,
+            "end": 27780000,
+            "machine": 9,
+            "start": 25440000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 68,
+            "end": 48090000,
+            "machine": 15,
+            "start": 45030000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 69,
+            "end": 8400000,
+            "machine": 8,
+            "start": 5880000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 69,
+            "end": 21180000,
+            "machine": 11,
+            "start": 19740000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 69,
+            "end": 50940000,
+            "machine": 15,
+            "start": 48090000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 70,
+            "end": 14400000,
+            "machine": 2,
+            "start": 12780000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 70,
+            "end": 26520000,
+            "machine": 6,
+            "start": 23760000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 70,
+            "end": 29820000,
+            "machine": 9,
+            "start": 27960000,
+            "type": "main"
+        },
+        {
+            "cast": 10,
+            "charge": 70,
+            "end": 54270000,
+            "machine": 15,
+            "start": 50940000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 71,
+            "end": 11940000,
+            "machine": 4,
+            "start": 9660000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 71,
+            "end": 18840000,
+            "machine": 7,
+            "start": 16620000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 71,
+            "end": 26580000,
+            "machine": 12,
+            "start": 24900000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 71,
+            "end": 57000000,
+            "machine": 15,
+            "start": 54450000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 72,
+            "end": 22020000,
+            "machine": 7,
+            "start": 19020000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 72,
+            "end": 24000000,
+            "machine": 11,
+            "start": 22320000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 72,
+            "end": 60210000,
+            "machine": 15,
+            "start": 57000000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 73,
+            "end": 16320000,
+            "machine": 1,
+            "start": 13980000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 73,
+            "end": 22440000,
+            "machine": 8,
+            "start": 19800000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 73,
+            "end": 63330000,
+            "machine": 15,
+            "start": 60210000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 74,
+            "end": 16980000,
+            "machine": 0,
+            "start": 15360000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 74,
+            "end": 24840000,
+            "machine": 7,
+            "start": 22200000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 74,
+            "end": 66750000,
+            "machine": 15,
+            "start": 63330000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 75,
+            "end": 16800000,
+            "machine": 4,
+            "start": 14400000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 75,
+            "end": 27420000,
+            "machine": 7,
+            "start": 25020000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 75,
+            "end": 31860000,
+            "machine": 10,
+            "start": 29580000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 75,
+            "end": 69660000,
+            "machine": 15,
+            "start": 66750000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 76,
+            "end": 20160000,
+            "machine": 0,
+            "start": 17160000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 76,
+            "end": 29640000,
+            "machine": 12,
+            "start": 26760000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 76,
+            "end": 72180000,
+            "machine": 15,
+            "start": 69660000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 77,
+            "end": 23820000,
+            "machine": 8,
+            "start": 22620000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 77,
+            "end": 26700000,
+            "machine": 11,
+            "start": 24480000,
+            "type": "main"
+        },
+        {
+            "cast": 11,
+            "charge": 77,
+            "end": 74850000,
+            "machine": 15,
+            "start": 72180000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 78,
+            "end": 24180000,
+            "machine": 3,
+            "start": 21660000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 78,
+            "end": 29280000,
+            "machine": 11,
+            "start": 26880000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 78,
+            "end": 78510000,
+            "machine": 15,
+            "start": 75030000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 79,
+            "end": 26160000,
+            "machine": 8,
+            "start": 24000000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 79,
+            "end": 29400000,
+            "machine": 10,
+            "start": 27000000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 79,
+            "end": 80940000,
+            "machine": 15,
+            "start": 78510000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 80,
+            "end": 30660000,
+            "machine": 3,
+            "start": 27900000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 80,
+            "end": 49560000,
+            "machine": 9,
+            "start": 47760000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 80,
+            "end": 84210000,
+            "machine": 15,
+            "start": 80940000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 81,
+            "end": 21960000,
+            "machine": 4,
+            "start": 19620000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 81,
+            "end": 28980000,
+            "machine": 7,
+            "start": 27600000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 81,
+            "end": 87480000,
+            "machine": 15,
+            "start": 84210000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 82,
+            "end": 48360000,
+            "machine": 6,
+            "start": 46560000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 82,
+            "end": 57540000,
+            "machine": 9,
+            "start": 54720000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 82,
+            "end": 90210000,
+            "machine": 15,
+            "start": 87480000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 83,
+            "end": 22740000,
+            "machine": 0,
+            "start": 20340000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 83,
+            "end": 30660000,
+            "machine": 8,
+            "start": 29220000,
+            "type": "main"
+        },
+        {
+            "cast": 12,
+            "charge": 83,
+            "end": 93450000,
+            "machine": 15,
+            "start": 90210000,
+            "type": "main"
+        }
+    ],
+    "machine": [
+        {
+            "name": "BOF#1",
+            "order": 0,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#2",
+            "order": 1,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#3",
+            "order": 2,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#4",
+            "order": 3,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "BOF#5",
+            "order": 4,
+            "stage": 0,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#1",
+            "order": 5,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#2",
+            "order": 6,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#3",
+            "order": 7,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE1#4",
+            "order": 8,
+            "stage": 1,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE2#1",
+            "order": 9,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE2#2",
+            "order": 10,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE2#3",
+            "order": 11,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "REFINE_STAGE2#4",
+            "order": 12,
+            "stage": 2,
+            "type": "main"
+        },
+        {
+            "name": "CC#1",
+            "order": 13,
+            "stage": 3,
+            "type": "main"
+        },
+        {
+            "name": "CC#2",
+            "order": 14,
+            "stage": 3,
+            "type": "main"
+        },
+        {
+            "name": "CC#3",
+            "order": 15,
+            "stage": 3,
+            "type": "main"
+        }
+    ],
+    "start_time": 1455580800000
+}

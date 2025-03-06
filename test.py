@@ -5,6 +5,9 @@ from tkinter import ttk, messagebox, filedialog
 import json
 import subprocess
 import os
+from xml.dom import minidom
+from xml.sax import parseString
+
 import matplotlib
 import numpy as np
 from matplotlib import pyplot as plt
@@ -51,7 +54,6 @@ class FurnacePlanningModule(tk.Frame):
         """创建参数输入控件"""
         self.param_entries = {}
         params = [("timeLimit", "时间限制"), ("smDiv", "SM分区")]
-
         for i, (param, label) in enumerate(params):
             row = ttk.Frame(parent)
             row.pack(fill="x", padx=5, pady=2)
@@ -67,6 +69,34 @@ class FurnacePlanningModule(tk.Frame):
         ttk.Button(btn_frame, text="保存配置", command=self.save_settings).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="运行程序", command=self.run_furnace_plan).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="中止运行", command=self.stop_furnace_plan).pack(side="left", padx=5)
+        ttk.Button(btn_frame, text="导出到数据库", command=self.export_cast_plan).pack(side="left", padx=5)
+
+    def export_cast_plan(self):
+        """导出浇次计划到数据库"""
+        try:
+            dom = minidom.parse("castInput.xml")
+            conn = sqlite3.connect('steel_production.db')
+            cursor = conn.cursor()
+
+            for cast in dom.getElementsByTagName("Cast"):
+                cast_no = cast.getAttribute("chargeNum")
+                for charge in cast.getElementsByTagName("Charge"):
+                    charge_no = charge.getAttribute("lgSt")
+                    for heat in charge.getElementsByTagName("Heat"):
+                        data = (
+                            heat.getAttribute("chargeNo"),  # heat_id
+                            cast_no,
+                            charge_no,
+                            heat.getAttribute("orderNo"),
+                            heat.getAttribute("minLength"),
+                            heat.getAttribute("maxLength")
+                        )
+                        cursor.execute('''INSERT OR REPLACE INTO cast_plan 
+                                        VALUES (?,?,?,?,?,?)''', data)
+            conn.commit()
+            messagebox.showinfo("成功", f"导出{cast_no}条浇次计划数据")
+        except Exception as e:
+            messagebox.showerror("错误", f"导出失败: {str(e)}")
 
     def save_settings(self):
         """保存参数到JSON文件"""
@@ -559,61 +589,225 @@ class SteelCastingModule(tk.Frame):
 class DataManagementModule(tk.Frame):
     """数据管理模块"""
 
+    class DynamicFormDialog(tk.Toplevel):
+        """动态表单生成器"""
+
+        def __init__(self, parent, fields):
+            super().__init__(parent)
+            self.result = None
+            self.entries = {}
+
+            for idx, field in enumerate(fields):
+                ttk.Label(self, text=f"{field}:").grid(row=idx, column=0)
+                entry = ttk.Entry(self)
+                entry.grid(row=idx, column=1)
+                self.entries[field] = entry
+
+            ttk.Button(self, text="保存", command=self.on_save).grid(row=len(fields), columnspan=2)
+
+        def on_save(self):
+            self.result = [entry.get() for entry in self.entries.values()]
+            self.destroy()
     def __init__(self, parent):
         super().__init__(parent)
-        self.configure(bg="#FFF3E0")
-        self.db_conn = sqlite3.connect('steel_production.db')
-        self.create_table()
-        self.create_widgets()
-        self.load_data()
+        # 新增数据库连接
+        self.db_conn = sqlite3.connect(
+            'steel_production.db',
+            check_same_thread=False
+        )
+        print("数据库绝对路径:", os.path.abspath("steel_production.db"))
+        # 添加SQL日志追踪（关键调试代码）
+        self.table_var = tk.StringVar()
+        self.table_var.trace_add("write", self.on_table_changed)  # 添加状态监听
+        self.db_conn.set_trace_callback(print)
+        self.current_table = "production"  # 当前显示表
+        self.table_config = {
+            "production": {"type": "db", "title": "生产数据表"},
+            "cast_plan": {"type": "db", "title": "浇次计划结果表"},
+            "contract": {"type": "xml", "file": "FurnaceResult2.xml"},
+            "steel_result": {"type": "json", "file": "Data/result.json"}
+        }
+        self.create_ui()
+        self.init_tables()
 
-    def create_widgets(self):
-        """创建界面组件"""
-        # 工具栏
-        toolbar = ttk.Frame(self)
-        toolbar.pack(fill="x", pady=5)
+    def on_table_changed(self, event=None):
+        """当前表变化时更新数据和按钮状态"""
+        # 获取最新选择值（关键！）
+        self.current_table = self.table_var.get()
+        print(f"当前表已切换至：{self.current_table}")
+        self.load_current_data()
 
-        ttk.Button(toolbar, text="添加记录", command=self.show_add_dialog).pack(side="left", padx=5)
-        ttk.Button(toolbar, text="修改记录", command=self.show_edit_dialog).pack(side="left", padx=5)
-        ttk.Button(toolbar, text="删除记录", command=self.delete_record).pack(side="left", padx=5)
+    def __del__(self):
+        """析构时关闭连接"""
+        if hasattr(self, 'db_conn'):
+            self.db_conn.close()
 
-        # 搜索栏
-        search_frame = ttk.Frame(self)
-        search_frame.pack(fill="x", padx=10, pady=5)
+    def create_ui(self):
+        """创建带表切换功能的界面"""
+        control_frame = ttk.Frame(self)
+        control_frame.pack(fill="x", pady=5)
 
-        ttk.Label(search_frame, text="搜索条件:").pack(side="left")
-        self.search_field = ttk.Combobox(search_frame, values=["订单号", "炉号"], width=10)
-        self.search_field.pack(side="left", padx=5)
-        self.search_entry = ttk.Entry(search_frame, width=30)
-        self.search_entry.pack(side="left", padx=5)
-        ttk.Button(search_frame, text="搜索", command=self.search_data).pack(side="left")
+        # 初始化时设置有效值
+        self.table_var = tk.StringVar(value="production")  # 设置默认值
+        table_selector = ttk.Combobox(
+            control_frame,
+            textvariable=self.table_var,
+            values=list(self.table_config.keys()),  # 确保值列表正确
+            state="readonly"
+        )
+        table_selector.pack(side="left", padx=5)
+        table_selector.bind("<<ComboboxSelected>>", self.on_table_changed)
+
+        # 操作按钮组
+        btn_frame = ttk.Frame(control_frame)
+        btn_frame.pack(side="right")
+        ttk.Button(btn_frame, text="刷新", command=self.load_current_data).pack(side="left", padx=2)
+        ttk.Button(btn_frame, text="添加", command=self.add_record).pack(side="left", padx=2)
+        ttk.Button(btn_frame, text="删除", command=self.delete_record).pack(side="left", padx=2)
 
         # 数据表格
-        self.tree = ttk.Treeview(self, columns=("id", "order_no", "furnace_no", "width", "status"),
-                               show="headings")
-
-        # 调整列配置
-        columns = [
-            ("id", "ID", 50),
-            ("order_no", "订单号", 120),
-            ("furnace_no", "炉号", 150),
-            ("width", "宽度（mm）", 100),
-            ("status", "状态", 80)
-        ]
-
-        for col_id, text, width in columns:
-            self.tree.heading(col_id, text=text)
-            self.tree.column(col_id, width=width, anchor="center")
-
-        # 滚动条
+        self.tree = ttk.Treeview(self, columns=(), show="headings")
         vsb = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
         hsb = ttk.Scrollbar(self, orient="horizontal", command=self.tree.xview)
         self.tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-        # 布局
         self.tree.pack(side="left", fill="both", expand=True)
         vsb.pack(side="right", fill="y")
         hsb.pack(side="bottom", fill="x")
+
+    # ----------------- 通用数据操作 -----------------
+    def load_current_data(self):
+        """加载当前表数据"""
+        table = self.table_var.get()
+        if self.table_config[table]["type"] == "db":
+            self.load_db_table(table)
+        elif self.table_config[table]["type"] == "xml":
+            self.load_xml_data()
+        elif self.table_config[table]["type"] == "json":
+            self.load_json_data()
+
+        # ----------------- 数据库表操作 -----------------
+
+    def delete_record(self):
+        """通用删除方法"""
+        selected = self.tree.selection()
+        if not selected:
+            return
+
+        # 获取当前表配置
+        table_type = self.table_config[self.current_table]["type"]
+
+        if table_type == "db":
+            self._delete_db_record(selected)
+        else:
+            messagebox.showerror("操作禁止", "非数据库表不允许直接修改，请通过文件操作更新数据")
+            return
+    def _delete_db_record(self, selected_items):
+        """删除数据库记录"""
+        with sqlite3.connect('steel_production.db') as conn:
+            cursor = conn.cursor()
+            for item_id in selected_items:
+                # 获取记录唯一标识
+                item = self.tree.item(item_id)
+                record_id = item['values'][0]  # 假设ID在第一列
+
+                # 动态表名
+                cursor.execute(
+                    f"DELETE FROM {self.current_table} WHERE id=?",
+                    (record_id,)
+                )
+            conn.commit()
+        self.load_current_data()
+
+    def load_db_table(self, table_name):
+        """加载数据库表"""
+        self.tree.delete(*self.tree.get_children())
+        with sqlite3.connect('steel_production.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = [col[1] for col in cursor.fetchall()]
+
+            # 配置表格列
+            self.tree["columns"] = columns
+            for col in columns:
+                self.tree.heading(col, text=col)
+                self.tree.column(col, width=100)
+
+            # 加载数据
+            cursor.execute(f"SELECT * FROM {table_name}")
+            for row in cursor.fetchall():
+                self.tree.insert("", "end", values=row)
+
+    # ----------------- XML表操作 -----------------
+    def load_xml_data(self):
+        """加载XML合同数据"""
+        self.tree.delete(*self.tree.get_children())
+        dom = minidom.parse("FurnaceResult2.xml")
+        records = dom.getElementsByTagName("FurnaceResult")
+
+        # 动态获取字段
+        sample = records[0] if records else []
+        columns = [node.tagName for node in sample.childNodes if node.nodeType == node.ELEMENT_NODE]
+
+        # 配置表格
+        self.tree["columns"] = columns
+        for col in columns:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=120)
+
+        # 插入数据
+        for record in records:
+            values = [node.firstChild.data if node.firstChild else ""
+                      for node in record.childNodes if node.nodeType == node.ELEMENT_NODE]
+            self.tree.insert("", "end", values=values)
+
+
+    # ----------------- JSON表操作 -----------------
+    def load_json_data(self):
+        """加载JSON炼钢结果"""
+        with open("Data/result.json") as f:
+            data = json.load(f)
+
+        # 解析嵌套结构
+        blocks = data.get("block", [])
+        columns = ["machine", "start", "end", "cast", "charge"]
+
+        self.tree["columns"] = columns
+        for col in columns:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=100)
+
+        for block in blocks:
+            values = (
+                block.get("machine", ""),
+                block.get("start", ""),
+                block.get("end", ""),
+                block.get("cast", ""),
+                block.get("charge", "")
+            )
+            self.tree.insert("", "end", values=values)
+
+
+    def init_tables(self):
+        """初始化数据库表结构"""
+        with sqlite3.connect('steel_production.db') as conn:
+            cursor = conn.cursor()
+            # 浇次计划结果表
+            cursor.execute('''CREATE TABLE IF NOT EXISTS cast_plan
+                            (heat_id TEXT PRIMARY KEY,
+                             cast_no TEXT,
+                             charge_no TEXT,
+                             order_no TEXT,
+                             min_length INTEGER,
+                             max_length INTEGER)''')
+            # 生产数据表（原有）
+            cursor.execute('''CREATE TABLE IF NOT EXISTS production
+                            (id INTEGER PRIMARY KEY,
+                             order_no TEXT,
+                             furnace_no TEXT UNIQUE,
+                             width INTEGER,
+                             status TEXT)''')
+            conn.commit()
 
     def create_table(self):
         """创建数据库表"""
@@ -648,16 +842,21 @@ class DataManagementModule(tk.Frame):
             self.tree.insert("", "end", values=row)
 
     def show_add_dialog(self):
-        """显示添加记录对话框"""
-        dialog = tk.Toplevel(self)
-        dialog.title("添加新记录")
+        """显示添加记录对话框（增加类型检查）"""
+        current_table = self.table_var.get()
+        table_type = self.table_config[current_table]["type"]
 
-        fields = [
-            ("订单号", "order_no"),
-            ("炉号", "furnace_no"),
-            ("重量（吨）", "weight"),
-            ("状态", "status")
-        ]
+        # 非数据库类型直接提示
+        if table_type != "db":
+            messagebox.showerror("操作禁止", "非数据库表不允许直接修改，请通过文件操作更新数据")
+            return
+
+        # 数据库表才显示对话框
+        dialog = tk.Toplevel(self)
+        dialog.title(f"添加记录 - {current_table}")
+
+        # 根据表结构生成字段
+        fields = self._get_table_fields(current_table)
 
         entries = {}
         for idx, (label, field) in enumerate(fields):
@@ -666,76 +865,235 @@ class DataManagementModule(tk.Frame):
             entry.grid(row=idx, column=1, padx=5, pady=2)
             entries[field] = entry
 
-        # 状态选择框
-        status_combo = ttk.Combobox(dialog, values=["计划", "进行中", "已完成"])
-        status_combo.grid(row=4, column=1)
-        entries["status"] = status_combo
+        # 动态生成特殊控件
+        if current_table == "cast_plan":
+            # 浇次计划表不需要状态选择框
+            ttk.Button(dialog, text="保存",
+                       command=lambda: self.save_record(current_table, entries, dialog, fields)
+                       ).grid(row=len(fields), columnspan=2)
+        else:
+            # 生产数据表需要状态选择
+            status_combo = ttk.Combobox(dialog, values=["计划", "进行中", "已完成"])
+            status_combo.grid(row=len(fields), column=1)
+            entries["status"] = status_combo
+            ttk.Button(dialog, text="保存",
+                       command=lambda: self.save_record(current_table, entries, dialog, fields)
+                       ).grid(row=len(fields) + 1, columnspan=2)
 
-        ttk.Button(dialog, text="保存",
-                   command=lambda: self.save_record(entries, dialog)).grid(row=5, columnspan=2)
+    def _get_table_fields(self, table_name):
+        """根据表名获取字段配置"""
+        field_map = {
+            "cast_plan": [
+                ("任务号", "heat_id"),
+                ("浇次号", "cast_no"),
+                ("炉次号", "charge_no"),
+                ("合同号", "order_no"),
+                ("最小长度", "min_length"),
+                ("最大长度", "max_length"),
+            ],
+            "production": [
+                ("订单号", "order_no"),
+                ("炉号", "furnace_no"),
+                ("重量（吨）", "weight"),
+                ("宽度（mm）", "width")
+            ]
+        }
+        return field_map.get(table_name, [])
 
-    def save_record(self, entries, dialog):
-        """保存记录到数据库"""
+    def save_record(self, table_name, entries, dialog, fields):
+        """动态生成SQL保存记录"""
         try:
             cursor = self.db_conn.cursor()
-            cursor.execute('''INSERT INTO production_data 
-                            (order_no, furnace_no, width, status)
-                            VALUES (?, ?, ?, ?)''',
-                           (entries["order_no"].get(),
-                            entries["furnace_no"].get(),
-                            int(entries["width"].get()),
-                            entries["status"].get()))
+
+            # 生成列名和值列表
+            columns = [field[1] for field in fields]
+            values = []
+
+            # 类型转换处理
+            type_rules = {
+                "cast_plan": {
+                    "min_length": int,
+                    "max_length": int
+                },
+                "production": {
+                    "weight": float,
+                    "width": int
+                }
+            }
+
+            for col in columns:
+                value = entries[col].get()
+                # 应用类型转换规则
+                if table_name in type_rules and col in type_rules[table_name]:
+                    convert_func = type_rules[table_name][col]
+                    values.append(convert_func(value))
+                else:
+                    values.append(value)
+
+            # 动态生成插入语句
+            placeholders = ",".join(["?"] * len(values))
+            if table_name == "cast_plan":
+                sql = f"""INSERT INTO {table_name} 
+                        (heat_id, cast_no, charge_no, order_no, min_length, max_length)
+                        VALUES ({placeholders})"""
+            else:
+                # 处理生产表的状态字段
+                values.append(entries["status"].get())
+                columns.append("status")
+                placeholders += ",?"
+                sql = f"""INSERT INTO {table_name} 
+                        ({','.join(columns)}) VALUES ({placeholders})"""
+
+            cursor.execute(sql, values)
             self.db_conn.commit()
-            self.load_data()
+
+            # 刷新数据
+            self.load_current_data()
+            dialog.destroy()
+            messagebox.showinfo("成功", "记录添加成功")
+
+        except ValueError as e:
+            messagebox.showerror("输入错误", f"数据类型错误：{str(e)}")
+        except sqlite3.IntegrityError as e:
+            messagebox.showerror("唯一性冲突", f"主键或唯一约束冲突：{str(e)}")
+        except Exception as e:
+            messagebox.showerror("数据库错误", f"保存失败：{str(e)}")
+
+    def add_record(self):
+        """根据当前表类型执行添加操作"""
+        table_type = self.table_config[self.current_table]["type"]
+        if table_type == "db":
+            self._add_db_record()
+        else:
+            messagebox.showerror("操作禁止", "非数据库表不允许直接修改，请通过文件操作更新数据")
+            return
+
+    def _add_db_record(self):
+        """添加数据库记录"""
+        dialog = tk.Toplevel(self)
+        dialog.title("添加新记录")
+
+        # 根据当前表获取字段信息
+        with sqlite3.connect('steel_production.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"PRAGMA table_info({self.current_table})")
+            columns = [col[1] for col in cursor.fetchall() if col[1] != 'id']
+
+        entries = {}
+        for idx, col in enumerate(columns):
+            ttk.Label(dialog, text=f"{col}:").grid(row=idx, column=0, padx=5, pady=2)
+            entry = ttk.Entry(dialog)
+            entry.grid(row=idx, column=1, padx=5, pady=2)
+            entries[col] = entry
+
+        ttk.Button(dialog, text="保存",
+                   command=lambda: self._save_db_record(dialog, entries, columns)).grid(row=len(columns), columnspan=2)
+
+    def _save_db_record(self, dialog, entries, columns):
+        """保存数据库记录"""
+        try:
+            with sqlite3.connect('steel_production.db') as conn:
+                cursor = conn.cursor()
+                values = [entries[col].get() for col in columns]
+                placeholders = ",".join(["?"] * len(values))
+
+                # 处理不同表的插入语句
+                if self.current_table == "cast_plan":
+                    sql = f'''INSERT OR REPLACE INTO {self.current_table} 
+                            (heat_id, cast_no, charge_no, order_no, min_length, max_length)
+                            VALUES (?,?,?,?,?,?)'''
+                else:
+                    sql = f"INSERT INTO {self.current_table} ({','.join(columns)}) VALUES ({placeholders})"
+
+                cursor.execute(sql, values)
+                conn.commit()
+                self.load_current_data()
+                dialog.destroy()
+        except Exception as e:
+            messagebox.showerror("错误", f"保存失败: {str(e)}")
+
+    def _add_xml_record(self):
+        """添加XML记录"""
+        dialog = tk.Toplevel(self)
+        dialog.title("添加新炉次记录")
+
+        # XML字段定义
+        fields = [
+            "FURNACE_NO", "SLAB_NUM", "FURNACE_WT",
+            "FURNACE_AVAILABLE_CC_LIST", "FURNACE_WIDTH_MAX", "FURNACE_WIDTH_MIN"
+        ]
+
+        entries = {}
+        for idx, field in enumerate(fields):
+            ttk.Label(dialog, text=f"{field}:").grid(row=idx, column=0, padx=5, pady=2)
+            entry = ttk.Entry(dialog)
+            entry.grid(row=idx, column=1, padx=5, pady=2)
+            entries[field] = entry
+
+        ttk.Button(dialog, text="保存",
+                   command=lambda: self._save_xml_record(dialog, entries)).grid(row=len(fields), columnspan=2)
+
+    def _save_xml_record(self, dialog, entries):
+        """保存XML记录"""
+        try:
+            tree = ET.parse("FurnaceResult2.xml")
+            root = tree.getroot()
+
+            # 创建新节点
+            new_result = ET.SubElement(root, "FurnaceResult")
+            for tag, value in entries.items():
+                elem = ET.SubElement(new_result, tag)
+                elem.text = value.get()
+
+            # 美化XML格式
+            xml_str = ET.tostring(root, encoding="utf-8")
+            dom = parseString(xml_str)
+            with open("FurnaceResult2.xml", "w", encoding="utf-8") as f:
+                f.write(dom.toprettyxml(indent="  "))
+
+            self.load_current_data()
             dialog.destroy()
         except Exception as e:
             messagebox.showerror("错误", f"保存失败: {str(e)}")
 
-    def show_edit_dialog(self):
-        """显示编辑对话框"""
-        selected = self.tree.selection()
-        if not selected:
-            messagebox.showwarning("提示", "请先选择要修改的记录")
-            return
-
-        item = self.tree.item(selected[0])
-        values = item["values"]
-
+    def _add_json_record(self):
+        """添加JSON记录"""
         dialog = tk.Toplevel(self)
-        dialog.title("修改记录")
+        dialog.title("添加炼钢结果记录")
 
-        fields = [
-            ("ID", "id", True),
-            ("订单号", "order_no", False),
-            ("炉号", "furnace_no", True),
-            ("宽度（mm）", "width", False),
-            ("状态", "status", False)
-        ]
-
+        fields = ["machine", "start", "end", "cast", "charge"]
         entries = {}
-        for idx, (label, field, readonly) in enumerate(fields):
-            ttk.Label(dialog, text=label + ":").grid(row=idx, column=0, padx=5, pady=2)
+
+        for idx, field in enumerate(fields):
+            ttk.Label(dialog, text=f"{field}:").grid(row=idx, column=0, padx=5, pady=2)
             entry = ttk.Entry(dialog)
-            entry.insert(0, values[idx])
-            if readonly:
-                entry.config(state="readonly")
             entry.grid(row=idx, column=1, padx=5, pady=2)
             entries[field] = entry
 
-        # 状态选择框
-        status_combo = ttk.Combobox(dialog, values=["计划", "进行中", "已完成"])
-        status_combo.set(values[5])
-        status_combo.grid(row=5, column=1)
-        entries["status"] = status_combo
-
         ttk.Button(dialog, text="保存",
-                   command=lambda: self.update_record(values[0], entries, dialog)).grid(row=6, columnspan=2)
+                   command=lambda: self._save_json_record(dialog, entries)).grid(row=len(fields), columnspan=2)
+
+    def _save_json_record(self, dialog, entries):
+        """保存JSON记录"""
+        try:
+            with open("Data/result.json", "r+") as f:
+                data = json.load(f)
+                new_block = {k: v.get() for k, v in entries.items()}
+                data["block"].append(new_block)
+                f.seek(0)
+                json.dump(data, f, indent=2)
+                f.truncate()
+
+            self.load_current_data()
+            dialog.destroy()
+        except Exception as e:
+            messagebox.showerror("错误", f"保存失败: {str(e)}")
 
     def update_record(self, record_id, entries, dialog):
         """更新数据库记录"""
         try:
             cursor = self.db_conn.cursor()
-            cursor.execute('''UPDATE production_data SET
+            cursor.execute('''UPDATE production SET
                             order_no = ?,
                             furnace_no = ?,
                             weight = ?,
@@ -754,25 +1112,47 @@ class DataManagementModule(tk.Frame):
         except Exception as e:
             messagebox.showerror("错误", f"更新失败: {str(e)}")
 
-    def delete_record(self):
-        """删除选中记录"""
-        selected = self.tree.selection()
-        if not selected:
-            messagebox.showwarning("提示", "请先选择要删除的记录")
-            return
+    def _delete_xml_record(self, selected_items):
+        """删除XML记录"""
+        try:
+            dom = minidom.parse("FurnaceResult2.xml")
+            root = dom.documentElement
 
-        if messagebox.askyesno("确认", "确定要删除这条记录吗？"):
-            item = self.tree.item(selected[0])
-            record_id = item["values"][0]
+            # 构建索引
+            records = root.getElementsByTagName("FurnaceResult")
+            indexes = [int(i) for i in selected_items]
 
-            try:
-                cursor = self.db_conn.cursor()
-                cursor.execute("DELETE FROM production_data WHERE id = ?", (record_id,))
-                self.db_conn.commit()
-                self.load_data()
-            except Exception as e:
-                messagebox.showerror("错误", f"删除失败: {str(e)}")
+            # 逆序删除避免索引错位
+            for idx in sorted(indexes, reverse=True):
+                node = records[idx]
+                root.removeChild(node)
 
+            # 美化保存
+            with open("FurnaceResult2.xml", "w", encoding="utf-8") as f:
+                dom.writexml(f, indent="  ", addindent="  ", newl="\n")
+
+            self.load_current_data()
+        except Exception as e:
+            messagebox.showerror("错误", f"XML删除失败: {str(e)}")
+
+    def _delete_json_record(self, selected_items):
+        """删除JSON记录"""
+        try:
+            with open("Data/result.json", "r+") as f:
+                data = json.load(f)
+                indexes = [int(i) for i in selected_items]
+
+                # 逆序删除
+                for idx in sorted(indexes, reverse=True):
+                    del data["block"][idx]
+
+                f.seek(0)
+                json.dump(data, f, indent=2)
+                f.truncate()
+
+            self.load_current_data()
+        except Exception as e:
+            messagebox.showerror("错误", f"JSON删除失败: {str(e)}")
     def search_data(self):
         """执行搜索"""
         field_map = {
@@ -787,6 +1167,9 @@ class DataManagementModule(tk.Frame):
             self.load_data(f"{field} LIKE ?")
         else:
             self.load_data()
+
+
+
 
 class MainApplication(tk.Tk):
     def __init__(self):

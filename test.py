@@ -6,13 +6,214 @@ import json
 import subprocess
 import os
 import matplotlib
+import numpy as np
 from matplotlib import pyplot as plt
+import xml.etree.ElementTree as ET
+from tkinter import ttk
 
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from matplotlib.patches import Rectangle
 
+class FurnacePlanningModule(tk.Frame):
+    """组炉组浇模块"""
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.configure(bg="#E8F5E9")
+        self.process = None
+        self.create_widgets()
+        self.load_settings()
+        self.load_input_data()
+        self.load_cast_results()
+
+    def create_widgets(self):
+        """创建三大子模块"""
+        # 参数配置模块
+        param_frame = ttk.LabelFrame(self, text="参数配置")
+        param_frame.pack(fill="x", padx=10, pady=5)
+        self.create_param_controls(param_frame)
+
+        # 输入数据展示模块
+        input_frame = ttk.LabelFrame(self, text="输入数据展示")
+        input_frame.pack(fill="both", expand=True, padx=10, pady=5)
+        self.create_input_display(input_frame)
+
+        # 结果展示模块
+        result_frame = ttk.LabelFrame(self, text="浇注计划结果")
+        result_frame.pack(fill="both", expand=True, padx=10, pady=5)
+        self.create_result_table(result_frame)
+
+    # ----------------- 参数配置模块 -----------------
+    def create_param_controls(self, parent):
+        """创建参数输入控件"""
+        self.param_entries = {}
+        params = [("timeLimit", "时间限制"), ("smDiv", "SM分区")]
+
+        for i, (param, label) in enumerate(params):
+            row = ttk.Frame(parent)
+            row.pack(fill="x", padx=5, pady=2)
+
+            ttk.Label(row, text=label + ":", width=12).pack(side="left")
+            entry = ttk.Entry(row, width=15)
+            entry.pack(side="left", padx=5)
+            self.param_entries[param] = entry
+
+        # 按钮组
+        btn_frame = ttk.Frame(parent)
+        btn_frame.pack(pady=5)
+        ttk.Button(btn_frame, text="保存配置", command=self.save_settings).pack(side="left", padx=5)
+        ttk.Button(btn_frame, text="运行程序", command=self.run_furnace_plan).pack(side="left", padx=5)
+        ttk.Button(btn_frame, text="中止运行", command=self.stop_furnace_plan).pack(side="left", padx=5)
+
+    def save_settings(self):
+        """保存参数到JSON文件"""
+        settings = {
+            "timeLimit": self.param_entries["timeLimit"].get(),
+            "smDiv": self.param_entries["smDiv"].get()
+        }
+        try:
+            with open("furnaceSetting.json", "w") as f:
+                json.dump(settings, f, indent=4)
+            messagebox.showinfo("成功", "参数保存成功")
+        except Exception as e:
+            messagebox.showerror("错误", f"保存失败: {str(e)}")
+
+    def load_settings(self):
+        """加载参数配置"""
+        try:
+            with open("furnaceSetting.json") as f:
+                settings = json.load(f)
+                for param, entry in self.param_entries.items():
+                    entry.delete(0, tk.END)
+                    entry.insert(0, settings.get(param, ""))
+        except FileNotFoundError:
+            pass
+
+    # ----------------- 程序控制 -----------------
+    def run_furnace_plan(self):
+        """运行组炉程序"""
+        if self.process and self.process.poll() is None:
+            messagebox.showwarning("警告", "程序已在运行中")
+            return
+
+        try:
+            self.process = subprocess.Popen("furnacePlan.exe", shell=True)
+        except Exception as e:
+            messagebox.showerror("错误", f"程序启动失败: {str(e)}")
+
+    def stop_furnace_plan(self):
+        """中止程序运行"""
+        if self.process is None or self.process.poll() is not None:
+            messagebox.showinfo("提示", "没有正在运行的程序")
+            return
+
+        try:
+            if os.name == 'nt':
+                subprocess.run(f"taskkill /F /T /PID {self.process.pid}", shell=True)
+            else:
+                os.kill(self.process.pid, signal.SIGTERM)
+            messagebox.showinfo("成功", "程序已中止")
+            self.process = None
+        except Exception as e:
+            messagebox.showerror("错误", f"中止失败: {str(e)}")
+
+    # ----------------- 输入数据展示模块 -----------------
+    def create_input_display(self, parent):
+        """创建带颜色的XML数据展示"""
+        canvas = tk.Canvas(parent, bg="white")
+        vsb = ttk.Scrollbar(parent, orient="vertical", command=canvas.yview)
+        hsb = ttk.Scrollbar(parent, orient="horizontal", command=canvas.xview)
+
+        self.input_frame = ttk.Frame(canvas)
+        self.input_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+        canvas.create_window((0, 0), window=self.input_frame, anchor="nw")
+        canvas.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        vsb.pack(side="right", fill="y")
+        hsb.pack(side="bottom", fill="x")
+
+    def load_input_data(self):
+        """加载并展示FurnaceResult数据"""
+        try:
+            tree = ET.parse("FurnaceResult2.xml")
+            root = tree.getroot()
+
+            # 清空现有数据
+            for widget in self.input_frame.winfo_children():
+                widget.destroy()
+
+            # 创建带颜色的数据行
+            for idx, result in enumerate(root.findall("FurnaceResult")):
+                frame = ttk.Frame(self.input_frame)
+                frame.grid(row=idx, column=0, sticky="ew", pady=2)
+
+                # 设置交替背景色
+                bg_color = "#F0F8FF" if idx % 2 == 0 else "#E0FFFF"
+                frame.configure(style="Custom.TFrame")
+                style = ttk.Style()
+                style.configure("Custom.TFrame", background=bg_color)
+
+                # 显示关键字段
+                ttk.Label(frame, text=f"炉号: {result.find('FURNACE_NO').text}",
+                          background=bg_color).pack(side="left", padx=10)
+                ttk.Label(frame, text=f"板坯数: {result.find('SLAB_NUM').text}",
+                          background=bg_color).pack(side="left", padx=10)
+                ttk.Label(frame, text=f"重量: {result.find('FURNACE_WT').text}吨",
+                          background=bg_color).pack(side="left", padx=10)
+
+        except Exception as e:
+            messagebox.showerror("错误", f"加载XML数据失败: {str(e)}")
+
+    # ----------------- 结果展示模块 -----------------
+    def create_result_table(self, parent):
+        """创建可展开的浇注计划表格"""
+        self.cast_tree = ttk.Treeview(parent, columns=("value",), show="tree")
+
+        vsb = ttk.Scrollbar(parent, orient="vertical", command=self.cast_tree.yview)
+        hsb = ttk.Scrollbar(parent, orient="horizontal", command=self.cast_tree.xview)
+
+        self.cast_tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        # 配置样式
+        self.cast_tree.tag_configure("cast", background="#B0E0E6")
+        self.cast_tree.tag_configure("charge", background="#98FB98")
+        self.cast_tree.tag_configure("heat", background="white")
+
+        self.cast_tree.pack(side="left", fill="both", expand=True)
+        vsb.pack(side="right", fill="y")
+        hsb.pack(side="bottom", fill="x")
+
+    def load_cast_results(self):
+        """加载浇注计划结果"""
+        try:
+            tree = ET.parse("castInput.xml")
+            root = tree.getroot()
+
+            # 清空现有数据
+            for item in self.cast_tree.get_children():
+                self.cast_tree.delete(item)
+
+            # 添加层次数据
+            for cast in root.findall("Cast"):
+                cast_id = self.cast_tree.insert("", "end",
+                                                text=f"浇次 (炉数: {cast.attrib['chargeNum']})",
+                                                tags=("cast",))
+
+                for charge in cast.findall("Charge"):
+                    charge_id = self.cast_tree.insert(cast_id, "end",
+                                                      text=f"炉次 (实际长度: {charge.attrib['realLength']}mm)",
+                                                      tags=("charge",))
+
+                    for heat in charge.findall("Heat"):
+                        self.cast_tree.insert(charge_id, "end",
+                                              text=f"钢水 | 订单号: {heat.attrib['orderNo']} "
+                                                   f"长度范围: {heat.attrib['minLength']}-{heat.attrib['maxLength']}mm",
+                                              tags=("heat",))
+        except Exception as e:
+            messagebox.showerror("错误", f"加载浇注计划失败: {str(e)}")
 
 class SteelCastingModule(tk.Frame):
     """炼钢连铸模块"""
@@ -22,17 +223,24 @@ class SteelCastingModule(tk.Frame):
         self.configure(background="#E8F5E9")
         self.process = None
         self.highlight_items = set()  # 存储高亮项的ID
-        self.create_widgets()
+        # 正确初始化顺序
+        self.create_widgets()      # 先创建子控件
+        self.setup_gantt_interaction()  # 再设置交互
         self.load_settings()
         self.load_result()
         self.process = None
 
     def setup_gantt_interaction(self):
         """设置图表交互事件"""
+        # 绑定到 matplotlib canvas
+        self.canvas.mpl_connect("button_press_event", self.on_press)
+        self.canvas.mpl_connect("motion_notify_event", self.on_motion)
+        self.canvas.mpl_connect("button_release_event", self.on_release)
 
         # 初始化交互状态
-        self.pan_start = None
         self.zoom_rect = None
+        self.press_start = None
+        self.xlim = self.ax.get_xlim()
 
     def create_widgets(self):
         """创建三个子模块"""
@@ -199,7 +407,15 @@ class SteelCastingModule(tk.Frame):
         y_ticks = [i + 1 for i in range(len(machines))]
         self.ax.set_yticks(y_ticks)
         self.ax.set_yticklabels([f"设备 {m}" for m in machines])
+        # 计算时间范围
+        xmin = min(item["start"] - self.start_time for item in self.result_data)
+        xmax = max(item["end"] - self.start_time for item in self.result_data)
 
+        # 设置坐标轴范围
+        self.ax.set_ylim(0.5, len(machines) + 0.5)  # 增加垂直缩进
+        self.ax.set_xlim(xmin - 50, xmax + 50)  # 增加水平缩进
+        # 设置刻度步长（关键修改）
+        self.ax.set_xticks(np.arange(xmin // 100 * 100, xmax + 100, 100))  # 100单位间隔
         # 设置颜色映射
         charges = list(set(item["charge"] for item in self.result_data))
         colors = matplotlib.cm.get_cmap('tab20', len(charges))
@@ -211,13 +427,15 @@ class SteelCastingModule(tk.Frame):
             start = item["start"] - self.start_time
             duration = item["end"] - item["start"]
             # 根据高亮状态设置颜色
-            facecolor = color_map[item["charge"]]
-            edgecolor = 'red' if item["highlight"] else 'black'
-            linewidth = 2 if item["highlight"] else 0.5
 
-            rect = Rectangle((start, machine_idx - 0.4), duration, 0.8,
-                             facecolor=facecolor, edgecolor=edgecolor,
-                             linewidth=linewidth)
+            rect = Rectangle(
+                (start, machine_idx - 0.45),  # y位置微调
+                duration,
+                0.9,  # 高度从0.8增大到0.9
+                facecolor=color_map[item["charge"]],
+                edgecolor='red' if item["highlight"] else 'black',
+                linewidth=2 if item["highlight"] else 0.5
+            )
             self.ax.add_patch(rect)
         # 设置图表样式
         self.ax.set_xlabel("时间（分钟）")
@@ -254,6 +472,62 @@ class SteelCastingModule(tk.Frame):
         self.update_gantt()
         self.update_table()
 
+    # ----------------- 事件处理函数 -----------------
+    def on_press(self, event):
+        """鼠标按下事件"""
+        if event.inaxes != self.ax:
+            return
+        if event.button == 1:  # 左键按下
+            self.press_start = (event.xdata, event.ydata)
+            self.zoom_rect = Rectangle((0, 0), 0, 0,
+                                       linestyle='--',
+                                       edgecolor='gray',
+                                       facecolor=(0.8, 0.8, 0.8, 0.5))
+            self.ax.add_patch(self.zoom_rect)
+            self.canvas.draw()
+
+    def on_motion(self, event):
+        """鼠标拖动事件"""
+        if self.zoom_rect is None or event.inaxes != self.ax:
+            return
+        # 更新矩形框位置
+        start_x, start_y = self.press_start
+        curr_x = event.xdata
+        curr_y = event.ydata
+
+        width = curr_x - start_x
+        height = curr_y - start_y
+
+        self.zoom_rect.set_width(width)
+        self.zoom_rect.set_height(height * 10)  # 垂直方向铺满
+        self.zoom_rect.set_xy((start_x, self.ax.get_ylim()[0]))
+        self.canvas.draw()
+
+    def on_release(self, event):
+        """鼠标释放事件"""
+        if self.zoom_rect is None:
+            return
+
+        # 获取缩放范围
+        start_x = self.press_start[0]
+        end_x = event.xdata
+
+        # 调整坐标轴范围
+        self.ax.set_xlim(sorted([start_x, end_x]))
+
+        # 清理临时图形
+        self.zoom_rect.remove()
+        self.zoom_rect = None
+        self.press_start = None
+
+        # 重绘图表
+        self.canvas.draw()
+
+        # 双击右键恢复原始视图
+        if event.button == 3 and event.dblclick:
+            self.ax.set_xlim(self.xlim)
+            self.canvas.draw()
+
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -286,10 +560,8 @@ class MainApplication(tk.Tk):
     def create_modules(self):
         """创建三个模块并设置不同配色方案"""
         # 模块1：组炉组浇（蓝色系）
-        self.module1 = ModuleBase(self.notebook,
-                                  "组炉组浇模块",
-                                  bg_color="#E7F3FE",
-                                  text_color="#2B579A")
+        # 组炉组浇模块（蓝色系）
+        self.module1 = FurnacePlanningModule(self.notebook)
         self.notebook.add(self.module1, text="组炉组浇")
 
         # 模块2：炼钢连铸（绿色系）
@@ -309,6 +581,7 @@ class ModuleBase(tk.Frame):
 
     def __init__(self, parent, title, bg_color="#FFFFFF", text_color="#333333"):
         super().__init__(parent)
+        self.canvas = None
         self.title = title
         self.bg_color = bg_color
         self.text_color = text_color

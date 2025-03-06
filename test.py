@@ -10,6 +10,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
 from tkinter import ttk
+import sqlite3
+from tkinter import simpledialog
 
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -120,52 +122,78 @@ class FurnacePlanningModule(tk.Frame):
 
     # ----------------- 输入数据展示模块 -----------------
     def create_input_display(self, parent):
-        """创建带颜色的XML数据展示"""
-        canvas = tk.Canvas(parent, bg="white")
-        vsb = ttk.Scrollbar(parent, orient="vertical", command=canvas.yview)
-        hsb = ttk.Scrollbar(parent, orient="horizontal", command=canvas.xview)
+        """创建表格形式的XML数据展示"""
+        # 创建带滚动条的Treeview
+        self.input_tree = ttk.Treeview(parent, columns=(
+            "furnace_no", "slab_num", "weight",
+            "cc_list", "width_max", "width_min"
+        ), show="headings")
 
-        self.input_frame = ttk.Frame(canvas)
-        self.input_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        # 配置滚动条
+        vsb = ttk.Scrollbar(parent, orient="vertical", command=self.input_tree.yview)
+        hsb = ttk.Scrollbar(parent, orient="horizontal", command=self.input_tree.xview)
+        self.input_tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-        canvas.create_window((0, 0), window=self.input_frame, anchor="nw")
-        canvas.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+        # 配置列定义
+        columns = {
+            "furnace_no": ("炉号", 150),
+            "slab_num": ("板坯数", 80),
+            "weight": ("重量（吨）", 100),
+            "cc_list": ("可用机器列表", 120),
+            "width_max": ("最大宽度（mm）", 120),
+            "width_min": ("最小宽度（mm）", 120)
+        }
 
-        canvas.pack(side="left", fill="both", expand=True)
-        vsb.pack(side="right", fill="y")
-        hsb.pack(side="bottom", fill="x")
+        # 设置列标题
+        for col, (text, width) in columns.items():
+            self.input_tree.heading(col, text=text)
+            self.input_tree.column(col, width=width, anchor="center")
+
+        # 设置交替行颜色
+        self.input_tree.tag_configure("oddrow", background="#F0F8FF")
+        self.input_tree.tag_configure("evenrow", background="#E0FFFF")
+
+        # 布局
+        self.input_tree.grid(row=0, column=0, sticky="nsew")
+        vsb.grid(row=0, column=1, sticky="ns")
+        hsb.grid(row=1, column=0, sticky="ew")
+
+        # 设置网格行列权重
+        parent.grid_rowconfigure(0, weight=1)
+        parent.grid_columnconfigure(0, weight=1)
 
     def load_input_data(self):
         """加载并展示FurnaceResult数据"""
         try:
-            tree = ET.parse("FurnaceResult2.xml")
-            root = tree.getroot()
-
             # 清空现有数据
-            for widget in self.input_frame.winfo_children():
-                widget.destroy()
+            for item in self.input_tree.get_children():
+                self.input_tree.delete(item)
 
-            # 创建带颜色的数据行
-            for idx, result in enumerate(root.findall("FurnaceResult")):
-                frame = ttk.Frame(self.input_frame)
-                frame.grid(row=idx, column=0, sticky="ew", pady=2)
+            tree = ET.parse("FurnaceResult2.xml")
 
-                # 设置交替背景色
-                bg_color = "#F0F8FF" if idx % 2 == 0 else "#E0FFFF"
-                frame.configure(style="Custom.TFrame")
-                style = ttk.Style()
-                style.configure("Custom.TFrame", background=bg_color)
+            # 遍历每个FurnaceResult
+            for idx, result in enumerate(tree.findall(".//FurnaceResult")):
+                # 提取数据
+                values = (
+                    self._get_text(result, "FURNACE_NO"),
+                    self._get_text(result, "SLAB_NUM"),
+                    self._get_text(result, "FURNACE_WT"),
+                    self._get_text(result, "FURNACE_AVAILABLE_CC_LIST"),
+                    self._get_text(result, "FURNACE_WIDTH_MAX"),
+                    self._get_text(result, "FURNACE_WIDTH_MIN")
+                )
 
-                # 显示关键字段
-                ttk.Label(frame, text=f"炉号: {result.find('FURNACE_NO').text}",
-                          background=bg_color).pack(side="left", padx=10)
-                ttk.Label(frame, text=f"板坯数: {result.find('SLAB_NUM').text}",
-                          background=bg_color).pack(side="left", padx=10)
-                ttk.Label(frame, text=f"重量: {result.find('FURNACE_WT').text}吨",
-                          background=bg_color).pack(side="left", padx=10)
+                # 插入表格并设置交替颜色
+                tag = "evenrow" if idx % 2 == 0 else "oddrow"
+                self.input_tree.insert("", "end", values=values, tags=(tag,))
 
         except Exception as e:
             messagebox.showerror("错误", f"加载XML数据失败: {str(e)}")
+
+    def _get_text(self, element, tag):
+        """安全获取XML节点文本"""
+        node = element.find(tag)
+        return node.text if node is not None else "N/A"
 
     # ----------------- 结果展示模块 -----------------
     def create_result_table(self, parent):
@@ -528,6 +556,238 @@ class SteelCastingModule(tk.Frame):
             self.ax.set_xlim(self.xlim)
             self.canvas.draw()
 
+class DataManagementModule(tk.Frame):
+    """数据管理模块"""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.configure(bg="#FFF3E0")
+        self.db_conn = sqlite3.connect('steel_production.db')
+        self.create_table()
+        self.create_widgets()
+        self.load_data()
+
+    def create_widgets(self):
+        """创建界面组件"""
+        # 工具栏
+        toolbar = ttk.Frame(self)
+        toolbar.pack(fill="x", pady=5)
+
+        ttk.Button(toolbar, text="添加记录", command=self.show_add_dialog).pack(side="left", padx=5)
+        ttk.Button(toolbar, text="修改记录", command=self.show_edit_dialog).pack(side="left", padx=5)
+        ttk.Button(toolbar, text="删除记录", command=self.delete_record).pack(side="left", padx=5)
+
+        # 搜索栏
+        search_frame = ttk.Frame(self)
+        search_frame.pack(fill="x", padx=10, pady=5)
+
+        ttk.Label(search_frame, text="搜索条件:").pack(side="left")
+        self.search_field = ttk.Combobox(search_frame, values=["订单号", "炉号"], width=10)
+        self.search_field.pack(side="left", padx=5)
+        self.search_entry = ttk.Entry(search_frame, width=30)
+        self.search_entry.pack(side="left", padx=5)
+        ttk.Button(search_frame, text="搜索", command=self.search_data).pack(side="left")
+
+        # 数据表格
+        self.tree = ttk.Treeview(self, columns=("id", "order_no", "furnace_no", "width", "status"),
+                               show="headings")
+
+        # 调整列配置
+        columns = [
+            ("id", "ID", 50),
+            ("order_no", "订单号", 120),
+            ("furnace_no", "炉号", 150),
+            ("width", "宽度（mm）", 100),
+            ("status", "状态", 80)
+        ]
+
+        for col_id, text, width in columns:
+            self.tree.heading(col_id, text=text)
+            self.tree.column(col_id, width=width, anchor="center")
+
+        # 滚动条
+        vsb = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
+        hsb = ttk.Scrollbar(self, orient="horizontal", command=self.tree.xview)
+        self.tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        # 布局
+        self.tree.pack(side="left", fill="both", expand=True)
+        vsb.pack(side="right", fill="y")
+        hsb.pack(side="bottom", fill="x")
+
+    def create_table(self):
+        """创建数据库表"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS production_data
+                        (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                         order_no TEXT NOT NULL,
+                         furnace_no TEXT UNIQUE,
+                         width INTEGER,
+                         status TEXT CHECK(status IN ('计划', '进行中', '已完成')))''')
+        self.db_conn.commit()
+
+    def load_data(self, condition=None):
+        """加载数据到表格"""
+        # 清空现有数据
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        # 执行查询
+        cursor = self.db_conn.cursor()
+        query = "SELECT * FROM production_data"
+        params = ()
+
+        if condition:
+            query += " WHERE " + condition
+            params = (f"%{self.search_entry.get()}%",)
+
+        cursor.execute(query, params)
+
+        # 插入数据
+        for row in cursor.fetchall():
+            self.tree.insert("", "end", values=row)
+
+    def show_add_dialog(self):
+        """显示添加记录对话框"""
+        dialog = tk.Toplevel(self)
+        dialog.title("添加新记录")
+
+        fields = [
+            ("订单号", "order_no"),
+            ("炉号", "furnace_no"),
+            ("重量（吨）", "weight"),
+            ("状态", "status")
+        ]
+
+        entries = {}
+        for idx, (label, field) in enumerate(fields):
+            ttk.Label(dialog, text=label + ":").grid(row=idx, column=0, padx=5, pady=2)
+            entry = ttk.Entry(dialog)
+            entry.grid(row=idx, column=1, padx=5, pady=2)
+            entries[field] = entry
+
+        # 状态选择框
+        status_combo = ttk.Combobox(dialog, values=["计划", "进行中", "已完成"])
+        status_combo.grid(row=4, column=1)
+        entries["status"] = status_combo
+
+        ttk.Button(dialog, text="保存",
+                   command=lambda: self.save_record(entries, dialog)).grid(row=5, columnspan=2)
+
+    def save_record(self, entries, dialog):
+        """保存记录到数据库"""
+        try:
+            cursor = self.db_conn.cursor()
+            cursor.execute('''INSERT INTO production_data 
+                            (order_no, furnace_no, width, status)
+                            VALUES (?, ?, ?, ?)''',
+                           (entries["order_no"].get(),
+                            entries["furnace_no"].get(),
+                            int(entries["width"].get()),
+                            entries["status"].get()))
+            self.db_conn.commit()
+            self.load_data()
+            dialog.destroy()
+        except Exception as e:
+            messagebox.showerror("错误", f"保存失败: {str(e)}")
+
+    def show_edit_dialog(self):
+        """显示编辑对话框"""
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showwarning("提示", "请先选择要修改的记录")
+            return
+
+        item = self.tree.item(selected[0])
+        values = item["values"]
+
+        dialog = tk.Toplevel(self)
+        dialog.title("修改记录")
+
+        fields = [
+            ("ID", "id", True),
+            ("订单号", "order_no", False),
+            ("炉号", "furnace_no", True),
+            ("宽度（mm）", "width", False),
+            ("状态", "status", False)
+        ]
+
+        entries = {}
+        for idx, (label, field, readonly) in enumerate(fields):
+            ttk.Label(dialog, text=label + ":").grid(row=idx, column=0, padx=5, pady=2)
+            entry = ttk.Entry(dialog)
+            entry.insert(0, values[idx])
+            if readonly:
+                entry.config(state="readonly")
+            entry.grid(row=idx, column=1, padx=5, pady=2)
+            entries[field] = entry
+
+        # 状态选择框
+        status_combo = ttk.Combobox(dialog, values=["计划", "进行中", "已完成"])
+        status_combo.set(values[5])
+        status_combo.grid(row=5, column=1)
+        entries["status"] = status_combo
+
+        ttk.Button(dialog, text="保存",
+                   command=lambda: self.update_record(values[0], entries, dialog)).grid(row=6, columnspan=2)
+
+    def update_record(self, record_id, entries, dialog):
+        """更新数据库记录"""
+        try:
+            cursor = self.db_conn.cursor()
+            cursor.execute('''UPDATE production_data SET
+                            order_no = ?,
+                            furnace_no = ?,
+                            weight = ?,
+                            width = ?,
+                            status = ?
+                            WHERE id = ?''',
+                           (entries["order_no"].get(),
+                            entries["furnace_no"].get(),
+                            float(entries["weight"].get()),
+                            int(entries["width"].get()),
+                            entries["status"].get(),
+                            record_id))
+            self.db_conn.commit()
+            self.load_data()
+            dialog.destroy()
+        except Exception as e:
+            messagebox.showerror("错误", f"更新失败: {str(e)}")
+
+    def delete_record(self):
+        """删除选中记录"""
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showwarning("提示", "请先选择要删除的记录")
+            return
+
+        if messagebox.askyesno("确认", "确定要删除这条记录吗？"):
+            item = self.tree.item(selected[0])
+            record_id = item["values"][0]
+
+            try:
+                cursor = self.db_conn.cursor()
+                cursor.execute("DELETE FROM production_data WHERE id = ?", (record_id,))
+                self.db_conn.commit()
+                self.load_data()
+            except Exception as e:
+                messagebox.showerror("错误", f"删除失败: {str(e)}")
+
+    def search_data(self):
+        """执行搜索"""
+        field_map = {
+            "订单号": "order_no",
+            "炉号": "furnace_no"
+        }
+
+        field = field_map.get(self.search_field.get(), "order_no")
+        keyword = self.search_entry.get()
+
+        if keyword:
+            self.load_data(f"{field} LIKE ?")
+        else:
+            self.load_data()
+
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -569,10 +829,8 @@ class MainApplication(tk.Tk):
         self.notebook.add(self.module2, text="炼钢连铸")
 
         # 模块3：数据管理（橙色系）
-        self.module3 = ModuleBase(self.notebook,
-                                  "数据管理模块",
-                                  bg_color="#FFF3E0",
-                                  text_color="#EF6C00")
+        # 数据管理模块（新实现）
+        self.module3 = DataManagementModule(self.notebook)
         self.notebook.add(self.module3, text="数据管理")
 
 

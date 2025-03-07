@@ -1,5 +1,7 @@
 # main.py
+import queue
 import signal
+import threading
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import json
@@ -331,6 +333,12 @@ class SteelCastingModule(tk.Frame):
 
     def __init__(self, parent):
         super().__init__(parent)
+        # 新增日志窗口控制参数
+        self.log_window = None
+        self.process = None
+        self.log_queue = queue.Queue()
+        self.log_thread = None
+
         self.configure(background="#E8F5E9")
         self.process = None
         self.highlight_items = set()
@@ -350,6 +358,38 @@ class SteelCastingModule(tk.Frame):
         self.load_settings()
         self.load_result()
         self.process = None
+
+    def create_log_window(self):
+        """创建日志窗口"""
+        self.log_window = tk.Toplevel(self)
+        self.log_window.title("程序执行日志")
+
+        # 日志文本框
+        self.log_text = tk.Text(self.log_window, wrap=tk.WORD, height=20, width=80)
+        scrollbar = ttk.Scrollbar(self.log_window, command=self.log_text.yview)
+        self.log_text.configure(yscrollcommand=scrollbar.set)
+
+        # 控制按钮
+        self.stop_btn = ttk.Button(self.log_window, text="中止执行", command=self.stop_program)
+
+        # 布局
+        self.log_text.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        self.stop_btn.grid(row=1, column=0, columnspan=2, pady=5)
+
+        self.log_window.grid_rowconfigure(0, weight=1)
+        self.log_window.grid_columnconfigure(0, weight=1)
+
+        # 开始更新日志
+        self.update_log()
+
+    def update_log(self):
+        """定时更新日志显示"""
+        while not self.log_queue.empty():
+            msg = self.log_queue.get()
+            self.log_text.insert(tk.END, msg)
+            self.log_text.see(tk.END)
+        self.log_window.after(100, self.update_log)
 
     def create_widgets(self):
         """创建三个子模块"""
@@ -608,9 +648,60 @@ class SteelCastingModule(tk.Frame):
             return
 
         try:
-            self.process = subprocess.Popen("main.exe", shell=True)
+            # 创建日志窗口
+            self.create_log_window()
+
+            # 启动子进程
+            self.process = subprocess.Popen(
+                "main.exe",
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                bufsize=1,
+                universal_newlines=True,
+                shell=True
+            )
+
+            # 启动日志读取线程
+            self.log_thread = threading.Thread(
+                target=self.read_output,
+                daemon=True
+            )
+            self.log_thread.start()
+
         except Exception as e:
-            messagebox.showerror("错误", f"程序启动失败:\n{str(e)}")
+            self.log_queue.put(f"\n错误: {str(e)}\n")
+            self.stop_btn.config(state=tk.DISABLED)
+
+    def read_output(self):
+        """读取程序输出到队列"""
+        while True:
+            output = self.process.stdout.readline()
+            if output == '' and self.process.poll() is not None:
+                break
+            if output:
+                self.log_queue.put(output)
+
+        # 程序结束处理
+        return_code = self.process.poll()
+        if return_code != 0:
+            self.log_queue.put(f"\n程序异常退出，返回码: {return_code}\n")
+        else:
+            self.log_queue.put("\n程序执行完成\n")
+
+        # 禁用中止按钮
+        self.stop_btn.config(state=tk.DISABLED)
+
+    def stop_program(self):
+        """中止程序执行"""
+        if self.process and self.process.poll() is None:
+            try:
+                if os.name == 'nt':
+                    subprocess.run(f"taskkill /F /PID {self.process.pid}", shell=True)
+                else:
+                    os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
+                self.log_queue.put("\n已发送中止信号...\n")
+            except Exception as e:
+                self.log_queue.put(f"\n中止失败: {str(e)}\n")
 
     def stop_program(self):
         if self.process is None or self.process.poll() is not None:

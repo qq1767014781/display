@@ -72,32 +72,85 @@ class FurnacePlanningModule(tk.Frame):
         ttk.Button(btn_frame, text="导出到数据库", command=self.export_cast_plan).pack(side="left", padx=5)
 
     def export_cast_plan(self):
-        """导出浇次计划到数据库"""
+        """为每个 Heat 生成唯一 heat_id，格式：chargeNo_minLength_序号"""
         try:
             dom = minidom.parse("castInput.xml")
             conn = sqlite3.connect('steel_production.db')
             cursor = conn.cursor()
 
-            for cast in dom.getElementsByTagName("Cast"):
-                cast_no = cast.getAttribute("chargeNum")
-                for charge in cast.getElementsByTagName("Charge"):
-                    charge_no = charge.getAttribute("lgSt")
-                    for heat in charge.getElementsByTagName("Heat"):
-                        data = (
-                            heat.getAttribute("chargeNo"),  # heat_id
-                            cast_no,
-                            charge_no,
-                            heat.getAttribute("orderNo"),
-                            heat.getAttribute("minLength"),
-                            heat.getAttribute("maxLength")
-                        )
-                        cursor.execute('''INSERT OR REPLACE INTO cast_plan 
-                                        VALUES (?,?,?,?,?,?)''', data)
-            conn.commit()
-            messagebox.showinfo("成功", f"导出{cast_no}条浇次计划数据")
-        except Exception as e:
-            messagebox.showerror("错误", f"导出失败: {str(e)}")
+            # 创建表（保持原结构）
+            cursor.execute('''CREATE TABLE IF NOT EXISTS production (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            heat_id TEXT UNIQUE,  -- 添加唯一约束
+                            order_no TEXT,
+                            furnace_no TEXT,
+                            width INTEGER,
+                            status TEXT)''')
 
+            cursor.execute('''CREATE TABLE IF NOT EXISTS cast_plan (
+                            heat_id TEXT,
+                            cast_no TEXT,
+                            charge_no TEXT,
+                            order_no TEXT,
+                            min_length INTEGER,
+                            max_length INTEGER,
+                            PRIMARY KEY (heat_id, cast_no))''')
+
+            with conn:
+                cursor.execute("DELETE FROM production")
+                cursor.execute("DELETE FROM cast_plan")
+
+                # 遍历 XML 结构
+                heat_counter = 1  # 每个 Charge 节点重置计数器
+                for cast in dom.getElementsByTagName("Cast"):
+                    cast_no = cast.getAttribute("chargeNum")
+                    if not cast_no:
+                        raise ValueError("Cast 节点缺少 chargeNum 属性")
+
+                    for charge in cast.getElementsByTagName("Charge"):
+                        charge_lgst = charge.getAttribute("lgSt")
+
+
+                        for heat in charge.getElementsByTagName("Heat"):
+                            # 提取字段
+                            charge_no = heat.getAttribute("chargeNo")
+                            order_no = heat.getAttribute("orderNo")
+                            min_length = heat.getAttribute("minLength")
+                            max_length = heat.getAttribute("maxLength")
+
+                            # 校验必要字段
+                            if not charge_no:
+                                raise ValueError("Heat 节点缺少 chargeNo 属性")
+                            if not min_length.isdigit() or not max_length.isdigit():
+                                raise ValueError(f"minLength/maxLength 必须是数字 (Heat: {charge_no})")
+
+                            # 生成唯一 heat_id（chargeNo_minLength_序号）
+                            heat_id = f"{charge_no}_{min_length}_{heat_counter}"
+                            heat_counter += 1  # 递增计数器
+
+                            # 插入 production 表
+                            cursor.execute('''INSERT INTO production 
+                                           (heat_id, order_no, furnace_no, width, status)
+                                           VALUES (?, ?, ?, ?, ?)''',
+                                           (heat_id, order_no, charge_no, int(min_length), "1"))
+
+                            # 插入 cast_plan 表
+                            cursor.execute('''INSERT INTO cast_plan 
+                                           (heat_id, cast_no, charge_no, order_no, min_length, max_length)
+                                           VALUES (?, ?, ?, ?, ?, ?)''',
+                                           (heat_id, cast_no, charge_lgst, order_no,
+                                            int(min_length), int(max_length)))
+
+                # 统计结果
+                prod_count = cursor.execute("SELECT COUNT(*) FROM production").fetchone()[0]
+                cast_count = cursor.execute("SELECT COUNT(*) FROM cast_plan").fetchone()[0]
+                messagebox.showinfo("成功", f"导出完成\n生产表：{prod_count}条\n浇次计划表：{cast_count}条")
+
+        except Exception as e:
+            messagebox.showerror("失败", f"导出失败: {str(e)}")
+
+        except Exception as e:
+            messagebox.showerror("失败", f"导出失败: {str(e)}")
     def save_settings(self):
         """保存参数到JSON文件"""
         settings = {
@@ -280,25 +333,23 @@ class SteelCastingModule(tk.Frame):
         super().__init__(parent)
         self.configure(background="#E8F5E9")
         self.process = None
-        self.highlight_items = set()  # 存储高亮项的ID
-        # 正确初始化顺序
-        self.create_widgets()      # 先创建子控件
-        self.setup_gantt_interaction()  # 再设置交互
+        self.highlight_items = set()
+
+        # ========== 新增初始化参数 ==========
+        # Y轴滚动控制
+        self.current_ypos = 0  # 当前垂直滚动位置（设备起始索引）
+        self.visible_machines = 10  # 默认可见设备数量
+        self.total_machines = 0  # 总设备数（数据加载后更新）
+
+        # X轴滚动控制
+        self.current_x_start = 0  # 当前水平滚动位置（时间起始点）
+        self.view_width = 20000  # 固定视图宽度
+
+        # ========== 初始化控件 ==========
+        self.create_widgets()
         self.load_settings()
         self.load_result()
         self.process = None
-
-    def setup_gantt_interaction(self):
-        """设置图表交互事件"""
-        # 绑定到 matplotlib canvas
-        self.canvas.mpl_connect("button_press_event", self.on_press)
-        self.canvas.mpl_connect("motion_notify_event", self.on_motion)
-        self.canvas.mpl_connect("button_release_event", self.on_release)
-
-        # 初始化交互状态
-        self.zoom_rect = None
-        self.press_start = None
-        self.xlim = self.ax.get_xlim()
 
     def create_widgets(self):
         """创建三个子模块"""
@@ -339,17 +390,132 @@ class SteelCastingModule(tk.Frame):
         ttk.Button(btn_frame, text="中止执行", command=self.stop_program).pack(side="left", padx=5)
 
     def create_gantt_chart(self):
-        """创建甘特图画布"""
+        """创建甘特图画布和滚动条"""
         self.fig = Figure(figsize=(8, 4), dpi=100)
         self.ax = self.fig.add_subplot(111)
+
+        # 创建画布
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.gantt_frame)
-        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+        self.canvas_widget = self.canvas.get_tk_widget()
+
+        # 创建滚动条（仅绑定命令，不配置其他参数）
+        self.gantt_vscroll = ttk.Scrollbar(self.gantt_frame, orient="vertical", command=self.on_y_scroll)
+        self.gantt_hscroll = ttk.Scrollbar(self.gantt_frame, orient="horizontal", command=self.on_x_scroll)
+
+        # 布局
+        self.canvas_widget.grid(row=0, column=0, sticky="nsew")
+        self.gantt_vscroll.grid(row=0, column=1, sticky="ns")
+        self.gantt_hscroll.grid(row=1, column=0, sticky="ew")
+
+        # 配置权重
+        self.gantt_frame.grid_rowconfigure(0, weight=1)
+        self.gantt_frame.grid_columnconfigure(0, weight=1)
+
+    def on_y_scroll(self, *args):
+        """处理垂直滚动事件（仅响应滚动条操作）"""
+        if self.total_machines <= self.visible_machines:
+            return
+
+        event_type = args[0]
+        max_scroll = self.total_machines - self.visible_machines
+
+        # 计算新位置
+        if event_type == "moveto":
+            fraction = float(args[1])
+            new_ypos = int(fraction * max_scroll)
+        elif event_type == "scroll":
+            step = int(args[1])
+            new_ypos = self.current_ypos + step  # ✅ 使用已初始化的属性
+        else:
+            return
+
+        # 更新位置
+        new_ypos = max(0, min(new_ypos, max_scroll))
+        if new_ypos != self.current_ypos:
+            self.current_ypos = new_ypos
+            self.update_gantt()
+
+    def on_gantt_scroll(self, *args):
+        """处理滚动事件"""
+        if not self.result_data or self.xmax_total <= self.view_width:
+            return  # 无数据或无需滚动时直接返回
+
+        # 解析滚动类型
+        event_type = args[0]
+
+        # 计算可滚动范围
+        max_scroll = self.xmax_total - self.view_width
+
+        # 获取当前视图起始位置
+        current_start = self.ax.get_xlim()[0]
+
+        # 解析滚动动作
+        if event_type == "moveto":
+            # 拖动滑块
+            fraction = float(args[1])
+            new_start = fraction * max_scroll
+        elif event_type == "scroll":
+            # 点击箭头步进滚动（每次滚动200单位）
+            step = int(args[1])
+            current_start = self.ax.get_xlim()[0]
+            new_start = current_start + step * 200
+        else:
+            return
+
+        # 限制滚动范围
+        new_start = max(0, min(new_start, max_scroll))
+        # 更新视图起始位置
+        self.current_x_start = new_start
+        # 更新视图
+        self.current_xlim = (new_start, new_start + self.view_width)
+        self.ax.set_xlim(self.current_x_start, self.current_x_start + self.view_width)
+
+        self.canvas.draw_idle()
+
+    def on_x_scroll(self, *args):
+        """处理水平滚动事件"""
+        if not hasattr(self, 'xmax_total') or self.xmax_total <= self.view_width:
+            return  # 无数据或无需滚动时直接返回
+
+        event_type = args[0]
+        max_scroll = self.xmax_total - self.view_width  # 最大可滚动范围
+
+        # 解析滚动类型
+        if event_type == "moveto":
+            # 拖动滑块事件：args[1] 是滑块位置比例 (0.0~1.0)
+            fraction = float(args[1])
+            new_start = fraction * max_scroll
+        elif event_type == "scroll":
+            # 点击箭头事件：args[1] 是滚动步长 (1=左移，-1=右移)
+            step = int(args[1])
+            new_start = self.current_x_start + step * 200  # 每次滚动200单位
+        else:
+            return
+
+        # 限制滚动范围
+        new_start = max(0, min(new_start, max_scroll))
+
+        # 更新视图参数
+        if new_start != self.current_x_start:
+            self.current_x_start = new_start
+            self.ax.set_xlim(new_start, new_start + self.view_width)
+            self.canvas.draw_idle()
+
+            # 更新滚动条滑块位置
+            scroll_span = self.xmax_total - self.view_width
+            if scroll_span > 0:
+                self.gantt_hscroll.set(
+                    new_start / scroll_span,
+                    (new_start + self.view_width) / self.xmax_total
+                )
 
     def create_data_table(self, parent):
         """创建数据表格"""
         self.tree = ttk.Treeview(parent, columns=("cast", "charge", "machine", "start", "end"), show="headings")
         vsb = ttk.Scrollbar(parent, orient="vertical", command=self.tree.yview)
         hsb = ttk.Scrollbar(parent, orient="horizontal", command=self.tree.xview)
+        # 配置高亮标签样式
+        self.tree.tag_configure("highlight", background="#FFE4E1")  # ✅ 正确配置方式
         self.tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
         self.tree.pack(side="left", fill="both", expand=True)
@@ -403,13 +569,34 @@ class SteelCastingModule(tk.Frame):
                 data = json.load(f)
                 self.result_data = data.get("block", [])
                 self.start_time = data.get("start_time", 0)
-
-                # 添加高亮状态
+                # 获取设备列表
+                machines = sorted({item["machine"] for item in self.result_data})
+                self.total_machines = len(machines)  # ✅ 初始化 total_machines
+                # 配置滚动条
+                if self.total_machines > self.visible_machines:
+                    self.gantt_vscroll.configure(command=self.on_y_scroll)
+                else:
+                    self.gantt_vscroll.configure(command=None)
+                # 计算数据总长度
+                self.xmax_total = max(
+                    (item["end"] - self.start_time for item in self.result_data),
+                    default=0
+                )
+                # 配置滚动条
+                max_scroll = max(0, self.xmax_total - self.view_width)
+                # 计算滚动条滑块比例\
+                if max_scroll > 0:
+                    self.gantt_hscroll.set(0, self.view_width / self.xmax_total)
+                else:
+                    self.gantt_hscroll.set(0, 1)  # 数据不足一屏时禁用
+                self.gantt_hscroll.set(0, self.view_width / self.xmax_total if self.xmax_total > 0 else 1)
+                # 初始化高亮状态
                 for item in self.result_data:
                     item["highlight"] = False
-
+                # 更新视图
                 self.update_gantt()
                 self.update_table()
+
         except Exception as e:
             messagebox.showerror("错误", f"无法读取结果文件:\n{str(e)}")
 
@@ -459,50 +646,72 @@ class SteelCastingModule(tk.Frame):
         plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         """更新甘特图"""
         self.ax.clear()
-
-        # 获取机器列表
+        # 获取设备子集
         machines = sorted({item["machine"] for item in self.result_data})
-        y_ticks = [i + 1 for i in range(len(machines))]
-        self.ax.set_yticks(y_ticks)
-        self.ax.set_yticklabels([f"设备 {m}" for m in machines])
-        # 计算时间范围
-        xmin = min(item["start"] - self.start_time for item in self.result_data)
-        xmax = max(item["end"] - self.start_time for item in self.result_data)
-
-        # 设置坐标轴范围
-        self.ax.set_ylim(0.5, len(machines) + 0.5)  # 增加垂直缩进
-        self.ax.set_xlim(xmin - 50, xmax + 50)  # 增加水平缩进
-        # 设置刻度步长（关键修改）
-        self.ax.set_xticks(np.arange(xmin // 100 * 100, xmax + 100, 100))  # 100单位间隔
+        visible_machines = machines[self.current_ypos: self.current_ypos + self.visible_machines]
+        # 设置Y轴范围
+        self.ax.set_ylim(0.5, self.visible_machines + 0.5)
+        self.ax.set_yticks(range(1, self.visible_machines + 1))
+        self.ax.set_yticklabels([f"设备 {m}" for m in visible_machines])
+        # 设置视图范围
+        if hasattr(self, 'current_xlim'):
+            start = self.current_xlim[0]
+        else:
+            start = 0  # 初始位置
+        # 设置刻度（根据需求调整步长）
+        self.ax.set_xticks(np.arange(0, self.xmax_total + 2000, 2000))
+        # 同步视图范围
+        current_start = self.ax.get_xlim()[0] if hasattr(self, 'current_xlim') else 0
+        current_start = (current_start // 2000) * 2000  # 对齐到2000倍数
+        self.ax.set_xlim(self.current_x_start, self.current_x_start + self.view_width)
         # 设置颜色映射
         charges = list(set(item["charge"] for item in self.result_data))
         colors = matplotlib.cm.get_cmap('tab20', len(charges))
         color_map = {charge: colors(i) for i, charge in enumerate(charges)}
 
         # 绘制每个任务块
+        # 绘制每个任务块
         for item in self.result_data:
             machine_idx = machines.index(item["machine"]) + 1
             start = item["start"] - self.start_time
             duration = item["end"] - item["start"]
-            # 根据高亮状态设置颜色
+
+            # 增强高亮样式
+            if item["highlight"]:
+                facecolor = (1, 0.5, 0.5, 0.7)  # 半透明红色
+                edgecolor = (1, 0, 0, 1)  # 纯红色
+                linewidth = 3
+                hatch = "////"  # 添加斜线图案
+            else:
+                facecolor = color_map[item["charge"]]
+                edgecolor = 'black'
+                linewidth = 0.5
+                hatch = None
 
             rect = Rectangle(
-                (start, machine_idx - 0.45),  # y位置微调
+                (start, machine_idx - 0.45),
                 duration,
-                0.9,  # 高度从0.8增大到0.9
-                facecolor=color_map[item["charge"]],
-                edgecolor='red' if item["highlight"] else 'black',
-                linewidth=2 if item["highlight"] else 0.5
+                0.9,
+                facecolor=facecolor,
+                edgecolor=edgecolor,
+                linewidth=linewidth,
+                hatch=hatch,  # 添加纹理
+                zorder=2 if item["highlight"] else 1  # 高亮项在上层
             )
             self.ax.add_patch(rect)
         # 设置图表样式
         self.ax.set_xlabel("时间（分钟）")
         self.ax.grid(True, axis='x', linestyle='--')
         self.fig.tight_layout()
-        # self.canvas.draw()
+        # ... 绘制逻辑不变 ...
+        self.canvas.draw()
 
     def update_table(self):
         """更新数据表格"""
+        # 定义高亮样式
+        style = ttk.Style()
+        style.configure("Highlight.Treeview", background="#FFE4E1")  # 浅红色背景
+
         for item in self.tree.get_children():
             self.tree.delete(item)
 
@@ -514,7 +723,9 @@ class SteelCastingModule(tk.Frame):
                 item["start"],
                 item["end"]
             )
-            self.tree.insert("", "end", values=values, tags=("highlight" if item["highlight"] else ""))
+            # 通过 tags 参数应用标签
+            tags = ("highlight",) if item["highlight"] else ()
+            self.tree.insert("", "end", values=values, tags=tags)
 
     # ----------------- 交互事件处理 -----------------
     def on_table_select(self, event):
@@ -529,62 +740,6 @@ class SteelCastingModule(tk.Frame):
 
         self.update_gantt()
         self.update_table()
-
-    # ----------------- 事件处理函数 -----------------
-    def on_press(self, event):
-        """鼠标按下事件"""
-        if event.inaxes != self.ax:
-            return
-        if event.button == 1:  # 左键按下
-            self.press_start = (event.xdata, event.ydata)
-            self.zoom_rect = Rectangle((0, 0), 0, 0,
-                                       linestyle='--',
-                                       edgecolor='gray',
-                                       facecolor=(0.8, 0.8, 0.8, 0.5))
-            self.ax.add_patch(self.zoom_rect)
-            self.canvas.draw()
-
-    def on_motion(self, event):
-        """鼠标拖动事件"""
-        if self.zoom_rect is None or event.inaxes != self.ax:
-            return
-        # 更新矩形框位置
-        start_x, start_y = self.press_start
-        curr_x = event.xdata
-        curr_y = event.ydata
-
-        width = curr_x - start_x
-        height = curr_y - start_y
-
-        self.zoom_rect.set_width(width)
-        self.zoom_rect.set_height(height * 10)  # 垂直方向铺满
-        self.zoom_rect.set_xy((start_x, self.ax.get_ylim()[0]))
-        self.canvas.draw()
-
-    def on_release(self, event):
-        """鼠标释放事件"""
-        if self.zoom_rect is None:
-            return
-
-        # 获取缩放范围
-        start_x = self.press_start[0]
-        end_x = event.xdata
-
-        # 调整坐标轴范围
-        self.ax.set_xlim(sorted([start_x, end_x]))
-
-        # 清理临时图形
-        self.zoom_rect.remove()
-        self.zoom_rect = None
-        self.press_start = None
-
-        # 重绘图表
-        self.canvas.draw()
-
-        # 双击右键恢复原始视图
-        if event.button == 3 and event.dblclick:
-            self.ax.set_xlim(self.xlim)
-            self.canvas.draw()
 
 class DataManagementModule(tk.Frame):
     """数据管理模块"""
@@ -616,6 +771,24 @@ class DataManagementModule(tk.Frame):
             check_same_thread=False
         )
         print("数据库绝对路径:", os.path.abspath("steel_production.db"))
+        self.search_config = {
+            "production": {
+                "fields": ["order_no", "furnace_no", "status"],
+                "labels": ["订单号", "炉号", "状态"]
+            },
+            "cast_plan": {
+                "fields": ["heat_id", "cast_no", "order_no"],
+                "labels": ["任务号", "浇次号", "合同号"]
+            },
+            "contract": {
+                "fields": ["FURNACE_NO", "CONTRACT_NO"],
+                "labels": ["炉号", "合同号"]
+            },
+            "steel_result": {
+                "fields": ["machine", "cast", "charge"],
+                "labels": ["设备号", "浇次", "炉次"]
+            }
+        }
         # 添加SQL日志追踪（关键调试代码）
         self.table_var = tk.StringVar()
         self.table_var.trace_add("write", self.on_table_changed)  # 添加状态监听
@@ -646,9 +819,38 @@ class DataManagementModule(tk.Frame):
         """创建带表切换功能的界面"""
         control_frame = ttk.Frame(self)
         control_frame.pack(fill="x", pady=5)
-
+        search_frame = ttk.Frame(control_frame)
+        search_frame.pack(side="left", padx=10)
         # 初始化时设置有效值
         self.table_var = tk.StringVar(value="production")  # 设置默认值
+        # 搜索字段选择
+        self.search_field = ttk.Combobox(
+            search_frame,
+            state="readonly",
+            width=8
+        )
+        self.search_field.pack(side="left")
+
+        # 关键词输入
+        self.search_entry = ttk.Entry(search_frame, width=15)
+        self.search_entry.pack(side="left", padx=2)
+
+        # 搜索按钮
+        ttk.Button(
+            search_frame,
+            text="搜索",
+            command=self.execute_search
+        ).pack(side="left")
+
+        # 清空按钮
+        ttk.Button(
+            search_frame,
+            text="清空",
+            command=self.clear_search
+        ).pack(side="left", padx=2)
+
+        # 绑定表切换事件
+        self.table_var.trace_add("write", self.update_search_fields)
         table_selector = ttk.Combobox(
             control_frame,
             textvariable=self.table_var,
@@ -675,49 +877,203 @@ class DataManagementModule(tk.Frame):
         vsb.pack(side="right", fill="y")
         hsb.pack(side="bottom", fill="x")
 
+    def update_search_fields(self, *args):
+        """切换表时更新搜索字段选项"""
+        current_table = self.table_var.get()
+        config = self.search_config.get(current_table, {})
+        self.search_field["values"] = config.get("labels", [])
+        if config.get("labels"):
+            self.search_field.current(0)
+
+    def execute_search(self):
+        """执行搜索（增加字段校验）"""
+        current_table = self.table_var.get()
+        keyword = self.search_entry.get().strip()
+
+        # 获取当前表配置
+        config = self.search_config.get(current_table, {})
+        labels = config.get("labels", [])
+        fields = config.get("fields", [])
+
+        # 验证字段映射
+        if len(labels) != len(fields):
+            messagebox.showerror("配置错误", "字段标签与字段名数量不匹配")
+            return
+
+        # 获取选中字段
+        selected_label = self.search_field.get()
+        try:
+            field_index = labels.index(selected_label)
+            field_name = fields[field_index]  # 正确获取字段名
+        except (ValueError, IndexError):
+            messagebox.showerror("错误", "无效的搜索字段")
+            return
+
+        # 分数据源处理
+        if self.table_config[current_table]["type"] == "db":
+            self._search_db(current_table, field_name, keyword)
+        else:
+            self._search_file_data(current_table, field_name, keyword)
+
+    def _search_db(self, table_name, field, keyword):
+        """数据库表搜索"""
+        with sqlite3.connect('steel_production.db') as conn:
+            cursor = conn.cursor()
+            query = f"SELECT * FROM {table_name} WHERE {field} LIKE ?"
+            cursor.execute(query, (f"%{keyword}%",))
+
+            # 清空并更新表格
+            self.tree.delete(*self.tree.get_children())
+            for row in cursor.fetchall():
+                self.tree.insert("", "end", values=row)
+
+    def _search_file_data(self, table_name, field, keyword):
+        """文件数据搜索"""
+        if table_name == "contract":
+            self._search_xml(field, keyword)
+        elif table_name == "steel_result":
+            self._search_json(field, keyword)
+
+    def _search_xml(self, field, keyword):
+        """XML精确搜索（适配NewDataSet结构）"""
+        self.tree.delete(*self.tree.get_children())
+
+        try:
+            dom = minidom.parse("FurnaceResult2.xml")
+            # 关键修正1：定位父节点
+            new_dataset = dom.getElementsByTagName("NewDataSet")[0]
+            records = new_dataset.getElementsByTagName("FurnaceResult")
+        except Exception as e:
+            messagebox.showerror("XML错误", f"文件解析失败: {str(e)}")
+            return
+
+        # 关键修正2：匹配实际存在的字段
+        valid_fields = {node.tagName for record in records
+                        for node in record.childNodes if node.nodeType == node.ELEMENT_NODE}
+        if field not in valid_fields:
+            messagebox.showerror("搜索错误", f"字段[{field}]不存在于XML数据中")
+            return
+
+        clean_keyword = keyword.strip()
+        for record in records:
+            try:
+                # 关键修正3：带错误保护的节点访问
+                target_node = record.getElementsByTagName(field)[0]
+                field_value = target_node.firstChild.data.strip() if target_node.firstChild else ""
+
+                if field_value == clean_keyword:
+                    # 动态获取所有字段值
+                    values = []
+                    for node in record.childNodes:
+                        if node.nodeType == node.ELEMENT_NODE:
+                            value = node.firstChild.data.strip() if node.firstChild else ""
+                            values.append(value)
+                    self.tree.insert("", "end", values=values)
+            except IndexError:
+                continue  # 跳过没有该字段的记录
+
+    def _search_json(self, field, keyword):
+        """JSON精确搜索（严格字段匹配）"""
+        self.tree.delete(*self.tree.get_children())
+        try:
+            with open("Data/result.json") as f:
+                data = json.load(f)
+
+            clean_keyword = keyword.strip()
+            for block in data.get("block", []):
+                # 严格匹配字段名称
+                if field not in block:
+                    continue
+
+                value = str(block[field]).strip()
+                if value == clean_keyword:
+                    self.tree.insert("", "end", values=(
+                        block.get("machine", ""),
+                        block.get("start", ""),
+                        block.get("end", ""),
+                        block.get("cast", ""),
+                        block.get("charge", "")
+                    ))
+        except Exception as e:
+            messagebox.showerror("错误", f"JSON搜索失败: {str(e)}")
+
+    def clear_search(self):
+        """清空搜索条件"""
+        self.search_entry.delete(0, "end")
+        self.load_current_data()
+
     # ----------------- 通用数据操作 -----------------
     def load_current_data(self):
         """加载当前表数据"""
+        """加载数据前完全重置表格"""
+        # 清空数据和列定义
+        self.tree.delete(*self.tree.get_children())
+        self.tree["columns"] = []
+
+        # 根据当前表类型加载
         table = self.table_var.get()
-        if self.table_config[table]["type"] == "db":
+        config = self.table_config.get(table, {})
+        if config.get("type") == "db":
             self.load_db_table(table)
-        elif self.table_config[table]["type"] == "xml":
+        elif config["type"] == "xml":
             self.load_xml_data()
-        elif self.table_config[table]["type"] == "json":
+        elif config["type"] == "json":
             self.load_json_data()
 
         # ----------------- 数据库表操作 -----------------
 
     def delete_record(self):
-        """通用删除方法"""
+        """统一删除记录入口"""
         selected = self.tree.selection()
         if not selected:
             return
 
-        # 获取当前表配置
-        table_type = self.table_config[self.current_table]["type"]
+        current_table = self.table_var.get()
+        table_type = self.table_config[current_table]["type"]
 
         if table_type == "db":
             self._delete_db_record(selected)
-        else:
-            messagebox.showerror("操作禁止", "非数据库表不允许直接修改，请通过文件操作更新数据")
+        elif table_type == "xml":
+            self._delete_xml_record(selected)
+        elif table_type == "json":
+            self._delete_json_record(selected)
             return
-    def _delete_db_record(self, selected_items):
-        """删除数据库记录"""
-        with sqlite3.connect('steel_production.db') as conn:
-            cursor = conn.cursor()
-            for item_id in selected_items:
-                # 获取记录唯一标识
-                item = self.tree.item(item_id)
-                record_id = item['values'][0]  # 假设ID在第一列
 
-                # 动态表名
+    def _delete_db_record(self, selected_items):
+        """删除数据库记录（动态识别主键）"""
+        try:
+            with sqlite3.connect('steel_production.db') as conn:
+                cursor = conn.cursor()
+
+                # 获取当前表的主键字段名
+                cursor.execute(f"PRAGMA table_info({self.current_table})")
+                columns = cursor.fetchall()
+                pk_column = next((col[1] for col in columns if col[5] == 1), None)
+
+                if not pk_column:
+                    raise ValueError(f"表 {self.current_table} 没有主键或主键不明确")
+
+                # 获取选中记录的主键值
+                pk_values = []
+                for item_id in selected_items:
+                    item = self.tree.item(item_id)
+                    # 主键值在values中的位置对应表结构
+                    pk_index = [col[0] for col in columns].index(0)  # cid从0开始
+                    pk_values.append(str(item['values'][pk_index]))
+
+                # 批量删除
+                placeholders = ",".join(["?"] * len(pk_values))
                 cursor.execute(
-                    f"DELETE FROM {self.current_table} WHERE id=?",
-                    (record_id,)
+                    f"DELETE FROM {self.current_table} WHERE {pk_column} IN ({placeholders})",
+                    pk_values
                 )
-            conn.commit()
-        self.load_current_data()
+                conn.commit()
+
+            self.load_current_data()
+        except StopIteration:
+            messagebox.showerror("错误", "无法识别表的主键")
+        except sqlite3.Error as e:
+            messagebox.showerror("数据库错误", f"删除失败: {str(e)}")
 
     def load_db_table(self, table_name):
         """加载数据库表"""
@@ -764,28 +1120,31 @@ class DataManagementModule(tk.Frame):
 
     # ----------------- JSON表操作 -----------------
     def load_json_data(self):
-        """加载JSON炼钢结果"""
-        with open("Data/result.json") as f:
-            data = json.load(f)
+        """加载JSON数据（固定列顺序）"""
+        try:
+            with open("Data/result.json") as f:
+                data = json.load(f)
 
-        # 解析嵌套结构
-        blocks = data.get("block", [])
-        columns = ["machine", "start", "end", "cast", "charge"]
+            # 显式定义列顺序（与JSON字段顺序严格一致）
+            columns = ["machine", "start", "end", "cast", "charge", "type"]
 
-        self.tree["columns"] = columns
-        for col in columns:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=100)
+            # 配置表格列
+            self.tree["columns"] = columns
+            for col in columns:
+                self.tree.heading(col, text=col)
+                self.tree.column(col, width=100)
 
-        for block in blocks:
-            values = (
-                block.get("machine", ""),
-                block.get("start", ""),
-                block.get("end", ""),
-                block.get("cast", ""),
-                block.get("charge", "")
-            )
-            self.tree.insert("", "end", values=values)
+            for block in data.get("block", []):
+                values = [block.get(col, "") for col in columns]
+                print(f"Debug - 提取值: {values}")  # 添加调试输出
+                self.tree.insert("", "end", values=values)
+            # 按定义顺序插入数据
+            for block in data.get("block", []):
+                values = [block.get(col, "") for col in columns]
+                self.tree.insert("", "end", values=values)
+
+        except Exception as e:
+            messagebox.showerror("加载错误", f"JSON数据加载失败: {str(e)}")
 
 
     def init_tables(self):
@@ -964,9 +1323,10 @@ class DataManagementModule(tk.Frame):
         table_type = self.table_config[self.current_table]["type"]
         if table_type == "db":
             self._add_db_record()
-        else:
-            messagebox.showerror("操作禁止", "非数据库表不允许直接修改，请通过文件操作更新数据")
-            return
+        elif table_type == "xml":
+            self._add_xml_record()
+        elif table_type == "json":
+            self._add_json_record()
 
     def _add_db_record(self):
         """添加数据库记录"""
@@ -1012,44 +1372,51 @@ class DataManagementModule(tk.Frame):
         except Exception as e:
             messagebox.showerror("错误", f"保存失败: {str(e)}")
 
+    # ----------------- XML 数据操作 -----------------
     def _add_xml_record(self):
-        """添加XML记录"""
+        """添加XML炉次记录"""
         dialog = tk.Toplevel(self)
         dialog.title("添加新炉次记录")
 
-        # XML字段定义
+        # 根据示例数据结构生成字段
         fields = [
-            "FURNACE_NO", "SLAB_NUM", "FURNACE_WT",
-            "FURNACE_AVAILABLE_CC_LIST", "FURNACE_WIDTH_MAX", "FURNACE_WIDTH_MIN"
+            "SM_DIV", "HR_DIV", "FURNACE_NO",
+            "FURNACE_AVAILABLE_CC_LIST", "ORDER_AVAILABLE_CC_LIST",
+            "FURNACE_WT", "IS_FULL", "ORDER_NO", "IS_NECESSARY_ORDER",
+            "ORDER_DELIVY_DATE_TYPE_PRIORITY", "ORDER_DELIVERY_TIME_PRIORITY",
+            "IS_FURNACE_WIDTH_JUMP", "FURNACE_WIDTH_MAX", "FURNACE_WIDTH_MIN",
+            "ORDER_WIDTH_MAX", "ORDER_WIDTH_MIN", "SLAB_NUM", "SLAB_PRE_WT",
+            "SLAB_TOTAL_WT", "ORDER_FINAL_DEST", "ST_NO_SPEC", "REFINE_DIV",
+            "LG_ST", "SLAB_DEST", "IS_RH_DEEP", "RH_OR_LF", "UNIT_MAJOR"
         ]
 
         entries = {}
         for idx, field in enumerate(fields):
-            ttk.Label(dialog, text=f"{field}:").grid(row=idx, column=0, padx=5, pady=2)
+            ttk.Label(dialog, text=f"{field}:").grid(row=idx, column=0, padx=2, pady=2)
             entry = ttk.Entry(dialog)
-            entry.grid(row=idx, column=1, padx=5, pady=2)
+            entry.grid(row=idx, column=1, padx=2, pady=2)
             entries[field] = entry
 
-        ttk.Button(dialog, text="保存",
-                   command=lambda: self._save_xml_record(dialog, entries)).grid(row=len(fields), columnspan=2)
+        ttk.Button(dialog, text="保存", command=lambda: self._save_xml_record(dialog, entries)).grid(row=len(fields)+1, columnspan=2)
 
     def _save_xml_record(self, dialog, entries):
         """保存XML记录"""
         try:
-            tree = ET.parse("FurnaceResult2.xml")
-            root = tree.getroot()
+            dom = minidom.parse("FurnaceResult2.xml")
+            new_dataset = dom.getElementsByTagName("NewDataSet")[0]
 
             # 创建新节点
-            new_result = ET.SubElement(root, "FurnaceResult")
-            for tag, value in entries.items():
-                elem = ET.SubElement(new_result, tag)
-                elem.text = value.get()
+            new_result = dom.createElement("FurnaceResult")
+            for field, entry in entries.items():
+                elem = dom.createElement(field)
+                elem.appendChild(dom.createTextNode(entry.get()))
+                new_result.appendChild(elem)
 
-            # 美化XML格式
-            xml_str = ET.tostring(root, encoding="utf-8")
-            dom = parseString(xml_str)
+            new_dataset.appendChild(new_result)
+
+            # 保持XML格式
             with open("FurnaceResult2.xml", "w", encoding="utf-8") as f:
-                f.write(dom.toprettyxml(indent="  "))
+                dom.writexml(f, indent="  ", addindent="  ", newl="\n")
 
             self.load_current_data()
             dialog.destroy()
@@ -1057,9 +1424,9 @@ class DataManagementModule(tk.Frame):
             messagebox.showerror("错误", f"保存失败: {str(e)}")
 
     def _add_json_record(self):
-        """添加JSON记录"""
+        """添加JSON炼钢结果"""
         dialog = tk.Toplevel(self)
-        dialog.title("添加炼钢结果记录")
+        dialog.title("添加炼钢结果")
 
         fields = ["machine", "start", "end", "cast", "charge"]
         entries = {}
@@ -1070,22 +1437,36 @@ class DataManagementModule(tk.Frame):
             entry.grid(row=idx, column=1, padx=5, pady=2)
             entries[field] = entry
 
-        ttk.Button(dialog, text="保存",
-                   command=lambda: self._save_json_record(dialog, entries)).grid(row=len(fields), columnspan=2)
+        ttk.Button(dialog, text="保存", command=lambda: self._save_json_record(dialog, entries)).grid(row=len(fields),
+                                                                                                      columnspan=2)
 
     def _save_json_record(self, dialog, entries):
         """保存JSON记录"""
         try:
             with open("Data/result.json", "r+") as f:
                 data = json.load(f)
-                new_block = {k: v.get() for k, v in entries.items()}
+
+                # 构建新记录
+                new_block = {
+                    "type": "main",
+                    "machine": int(entries["machine"].get()),
+                    "start": int(entries["start"].get()),
+                    "end": int(entries["end"].get()),
+                    "cast": int(entries["cast"].get()),
+                    "charge": int(entries["charge"].get())
+                }
+
                 data["block"].append(new_block)
+
+                # 保持原有结构
                 f.seek(0)
                 json.dump(data, f, indent=2)
                 f.truncate()
 
             self.load_current_data()
             dialog.destroy()
+        except ValueError:
+            messagebox.showerror("输入错误", "数值字段必须为整数")
         except Exception as e:
             messagebox.showerror("错误", f"保存失败: {str(e)}")
 
@@ -1116,31 +1497,31 @@ class DataManagementModule(tk.Frame):
         """删除XML记录"""
         try:
             dom = minidom.parse("FurnaceResult2.xml")
-            root = dom.documentElement
+            new_dataset = dom.getElementsByTagName("NewDataSet")[0]
+            records = new_dataset.getElementsByTagName("FurnaceResult")
 
-            # 构建索引
-            records = root.getElementsByTagName("FurnaceResult")
-            indexes = [int(i) for i in selected_items]
+            # 获取选中记录的索引
+            indexes = [int(self.tree.index(item)) for item in selected_items]
 
-            # 逆序删除避免索引错位
+            # 逆序删除
             for idx in sorted(indexes, reverse=True):
                 node = records[idx]
-                root.removeChild(node)
+                new_dataset.removeChild(node)
 
-            # 美化保存
+            # 保存修改
             with open("FurnaceResult2.xml", "w", encoding="utf-8") as f:
                 dom.writexml(f, indent="  ", addindent="  ", newl="\n")
 
             self.load_current_data()
         except Exception as e:
-            messagebox.showerror("错误", f"XML删除失败: {str(e)}")
+            messagebox.showerror("错误", f"删除失败: {str(e)}")
 
     def _delete_json_record(self, selected_items):
         """删除JSON记录"""
         try:
             with open("Data/result.json", "r+") as f:
                 data = json.load(f)
-                indexes = [int(i) for i in selected_items]
+                indexes = [int(self.tree.index(item)) for item in selected_items]
 
                 # 逆序删除
                 for idx in sorted(indexes, reverse=True):
@@ -1152,7 +1533,7 @@ class DataManagementModule(tk.Frame):
 
             self.load_current_data()
         except Exception as e:
-            messagebox.showerror("错误", f"JSON删除失败: {str(e)}")
+            messagebox.showerror("错误", f"删除失败: {str(e)}")
     def search_data(self):
         """执行搜索"""
         field_map = {
@@ -1167,9 +1548,6 @@ class DataManagementModule(tk.Frame):
             self.load_data(f"{field} LIKE ?")
         else:
             self.load_data()
-
-
-
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -1215,7 +1593,6 @@ class MainApplication(tk.Tk):
         # 数据管理模块（新实现）
         self.module3 = DataManagementModule(self.notebook)
         self.notebook.add(self.module3, text="数据管理")
-
 
 class ModuleBase(tk.Frame):
     """带颜色的模块基类"""
